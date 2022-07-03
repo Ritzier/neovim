@@ -60,8 +60,6 @@ return packer.startup(function(use)
 	use("folke/which-key.nvim")
 
 	-- Colorschemes
-	use({ "folke/tokyonight.nvim" })
-	use("lunarvim/darkplus.nvim")
 	use("EdenEast/nightfox.nvim")
 
 	-- cmp plugins
@@ -81,12 +79,47 @@ return packer.startup(function(use)
 	use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
 	use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
 
+	-- Trouble
+	use({
+		"folke/trouble.nvim",
+		opt = true,
+		cmd = { "Trouble", "TroubleToggle", "TroubleRefresh" },
+	})
+
+	-- Align
+	use({
+		"junegunn/vim-easy-align",
+		opt = true,
+		cmd = "EasyAlign",
+	})
+
+	-- Sniprun
+	use({
+		"michaelb/sniprun",
+		opt = true,
+		run = "bash ./install.sh",
+		cmd = { "SnipRun", "'<,'>SnipRun" },
+	})
+
+	-- Make command line better
+	use({
+		"gelguy/wilder.nvim",
+		event = "CmdlineEnter",
+		requires = { { "romgrk/fzy-lua-native", after = "wilder.nvim" } },
+	})
+
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim" })
 
 	-- Treesitter
 	use({
 		"nvim-treesitter/nvim-treesitter",
+	})
+	use({
+		"windwp/nvim-ts-autotag",
+		opt = true,
+		wants = "nvim-treesitter",
+		event = "InsertEnter",
 	})
 
 	-- Git

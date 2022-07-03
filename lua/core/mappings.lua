@@ -1,6 +1,5 @@
 local keymap = vim.keymap.set
 local default_opts = { noremap = true, silent = true }
-local expr_opts = { noremap = true, expr = true, silent = true }
 
 keymap("i", "jk", "<ESC>", default_opts)
 keymap("t", "jk", "<C-\\><C-n>", default_opts)
@@ -27,6 +26,3 @@ keymap('n', '<leader>tg', '<cmd>lua _LAZYGIT_TOGGLE()<CR>', default_opts)
 keymap('n', '<leader>tr', '<cmd>lua _RANGER_TOGGLE()<CR>', default_opts)
 
 keymap('n', '<leader>mp', ':MarkdownPreview<CR>', default_opts)
-
-
-return M
