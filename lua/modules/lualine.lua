@@ -21,7 +21,7 @@ local diff = {
 	"diff",
 	colored = false,
 	symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
-  cond = hide_in_width
+	cond = hide_in_width,
 }
 
 local mode = {
@@ -33,8 +33,9 @@ local mode = {
 
 local filetype = {
 	"filetype",
-	icons_enabled = false,
-	icon = nil,
+	icons_enabled = true,
+	icon_only = true,
+	--icon = "enable",
 }
 
 local branch = {
@@ -45,7 +46,6 @@ local branch = {
 
 local location = {
 	"location",
-	padding = 0,
 }
 
 -- cool function for progress
@@ -58,6 +58,13 @@ local progress = function()
 	return chars[index]
 end
 
+local test_progress = function()
+    local current_line = vim.fn.line('.')
+    local total_line = vim.fn.line('$')
+    local text = math.modf((current_line / total_line) * 100) .. tostring('%%')
+    return text
+end
+
 local spaces = function()
 	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
@@ -67,24 +74,28 @@ lualine.setup({
 		icons_enabled = true,
 		theme = "auto",
 		component_separators = { left = "", right = "" },
-		section_separators = { left = "", right = "" },
+		section_separators = { left = "", right = "" },
 		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
 		always_divide_middle = true,
 	},
 	sections = {
-		lualine_a = { branch, diagnostics },
-		lualine_b = { mode },
+		lualine_a = {
+			{ "mode", separator = { left = "" }, right_padding = 2 },
+		},
+		lualine_b = { branch, diff },
 		lualine_c = {},
 		-- lualine_x = { "encoding", "fileformat", "filetype" },
-		lualine_x = { diff, spaces, "encoding", filetype },
+		lualine_x = {  diagnostics, filetype },
 		lualine_y = { location },
-		lualine_z = { progress },
+		lualine_z = { 
+            {test_progress, separator = { right = "" }, left_padding = 2}
+            },
 	},
 	inactive_sections = {
 		lualine_a = {},
 		lualine_b = {},
-		lualine_c = { "filename" },
-		lualine_x = { "location" },
+		lualine_c = {},
+		lualine_x = {},
 		lualine_y = {},
 		lualine_z = {},
 	},
