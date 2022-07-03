@@ -19,8 +19,12 @@ local diagnostics = {
 
 local diff = {
 	"diff",
-	colored = false,
 	symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
+	diff_color = {
+		added = { fg = "#98be65" },
+		modified = { fg = "#FF8800" },
+		removed = { fg = "#ec5f67" },
+	},
 	cond = hide_in_width,
 }
 
@@ -33,9 +37,10 @@ local mode = {
 
 local filetype = {
 	"filetype",
+	colored = true,
 	icons_enabled = true,
-	icon_only = true,
-	--icon = "enable",
+	icon_only = false,
+	icon = { align = "right" },
 }
 
 local branch = {
@@ -59,14 +64,36 @@ local progress = function()
 end
 
 local test_progress = function()
-    local current_line = vim.fn.line('.')
-    local total_line = vim.fn.line('$')
-    local text = math.modf((current_line / total_line) * 100) .. tostring('%%')
-    return text
+	local current_line = vim.fn.line(".")
+	local total_line = vim.fn.line("$")
+	local text = math.modf((current_line / total_line) * 100) .. tostring("%%")
+	return text
+end
+
+local max_file_line = function()
+	local line = vim.fn.line("$")
+	return line
 end
 
 local spaces = function()
 	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+end
+
+local diag = {
+	"diagnostics",
+	sources = { "nvim_diagnostic" },
+	symbols = { error = " ", warn = " ", info = " " },
+	diagnostics_color = {
+		color_error = { fg = "#ec5f67" },
+		color_warn = { fg = "#ECBE7B" },
+		color_info = { fg = "#008080" },
+	},
+}
+
+local function z()
+	local line = max_file_line()
+	local pro = test_progress()
+	return pro .. "/" .. line
 end
 
 lualine.setup({
@@ -84,12 +111,11 @@ lualine.setup({
 		},
 		lualine_b = { branch, diff },
 		lualine_c = {},
-		-- lualine_x = { "encoding", "fileformat", "filetype" },
-		lualine_x = {  diagnostics, filetype },
+		lualine_x = { diag, filetype },
 		lualine_y = { location },
-		lualine_z = { 
-            {test_progress, separator = { right = "" }, left_padding = 2}
-            },
+		lualine_z = {
+			{ z, separator = { right = "" }, left_padding = 2 },
+		},
 	},
 	inactive_sections = {
 		lualine_a = {},
