@@ -96,6 +96,8 @@ local function z()
 	return pro .. "/" .. line
 end
 
+local gps = require("nvim-gps")
+
 lualine.setup({
 	options = {
 		icons_enabled = true,
@@ -110,7 +112,9 @@ lualine.setup({
 			{ "mode", separator = { left = "" }, right_padding = 2 },
 		},
 		lualine_b = { branch, diff },
-		lualine_c = {},
+		lualine_c = {
+            { gps.get_location, cond = gps.is_available },
+        },
 		lualine_x = { diag, filetype },
 		lualine_y = { location },
 		lualine_z = {

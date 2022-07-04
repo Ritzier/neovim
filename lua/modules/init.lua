@@ -89,7 +89,7 @@ return packer.startup(function(use)
     
     -- GPS
     use ({
-        "Smitesh/nvim-gps",
+        "SmiteshP/nvim-gps",
         after = 'nvim-treesitter',
     })
 
