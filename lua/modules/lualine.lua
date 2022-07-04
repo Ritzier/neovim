@@ -1,5 +1,6 @@
 local status_ok, lualine = pcall(require, "lualine")
-if not status_ok then
+local status_ok2, gps = pcall(require, "nvim-gps")
+if not status_ok and status_ok2 then
 	return
 end
 
