@@ -59,6 +59,7 @@ return packer.startup(function(use)
 	use({ "goolord/alpha-nvim" })
 	use("folke/which-key.nvim")
 	use({ "nathom/filetype.nvim" })
+    use({"mrjones2014/legendary.nvim"})
 
 	-- Colorschemes
 	use("EdenEast/nightfox.nvim")
@@ -86,12 +87,12 @@ return packer.startup(function(use)
 		opt = true,
 		cmd = { "Trouble", "TroubleToggle", "TroubleRefresh" },
 	})
-    
-    -- GPS
-    use ({
-        "SmiteshP/nvim-gps",
-        after = 'nvim-treesitter',
-    })
+
+	-- GPS
+	use({
+		"SmiteshP/nvim-gps",
+		after = "nvim-treesitter",
+	})
 
 	-- Align
 	use({
