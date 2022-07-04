@@ -125,10 +125,17 @@ return packer.startup(function(use)
 	})
 	use({
 		"windwp/nvim-ts-autotag",
-		opt = true,
 		wants = "nvim-treesitter",
 		event = "InsertEnter",
 	})
+    use({
+        "RRethy/nvim-treesitter-endwise",
+        after = "nvim-treesitter"
+    })
+    use({
+        "p00f/nvim-ts-rainbow",
+        after = "nvim-treesitter"
+    })
 
 	-- Git
 	use({ "lewis6991/gitsigns.nvim" })

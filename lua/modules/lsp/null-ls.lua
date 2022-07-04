@@ -8,12 +8,45 @@ local formatting = null_ls.builtins.formatting
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
 local diagnostics = null_ls.builtins.diagnostics
 
+local with_diagnostics_code = function(builtin)
+	return builtin.with({
+		diagnostics_format = "#{m} [#{c}]",
+	})
+end
+
+local code_actions = null_ls.builtins.code_actions
+
 null_ls.setup({
-	debug = false,
+    debug = true,
 	sources = {
-		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
-		formatting.black.with({ extra_args = { "--fast" } }),
+		formatting.prettierd,
+		formatting.shfmt,
+		formatting.shellharden,
+		formatting.fixjson,
+        formatting.black.with({ extra_args = { "--fast" } }),
+        --formatting.autopep8,
+		formatting.isort,
 		formatting.stylua,
-    -- diagnostics.flake8
+		formatting.google_java_format,
+        formatting.djhtml,
+
+		-- diagnostics
+		diagnostics.write_good,
+		diagnostics.eslint_d,
+		diagnostics.flake8,
+		diagnostics.tsc,
+
+        with_diagnostics_code(diagnostics.shellcheck),
+        diagnostics.zsh,
+
+        -- Code Action
+        code_actions.gitsigns.with{
+            disable_filetypes = { "NeogitCommitMessage" },
+        },
+        code_actions.eslint_d,
+        code_actions.gitrebase,
+        code_actions.refactoring,
+        code_actions.proselint,
+        code_actions.shellcheck,
 	},
 })
