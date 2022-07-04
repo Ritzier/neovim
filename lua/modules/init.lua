@@ -58,6 +58,7 @@ return packer.startup(function(use)
 	use({ "lukas-reineke/indent-blankline.nvim" })
 	use({ "goolord/alpha-nvim" })
 	use("folke/which-key.nvim")
+	use({ "nathom/filetype.nvim" })
 
 	-- Colorschemes
 	use("EdenEast/nightfox.nvim")
@@ -85,6 +86,12 @@ return packer.startup(function(use)
 		opt = true,
 		cmd = { "Trouble", "TroubleToggle", "TroubleRefresh" },
 	})
+    
+    -- GPS
+    use ({
+        "Smitesh/nvim-gps",
+        after = 'nvim-treesitter',
+    })
 
 	-- Align
 	use({
@@ -137,6 +144,164 @@ return packer.startup(function(use)
 		"rktjmp/lush.nvim",
 		cmd = { "LushRunQuickstart", "LushRunTutorial", "Lushify", "LushImport" },
 		disable = false,
+	})
+
+	-- language
+	-- Json
+	use({
+		"b0o/SchemaStore.nvim",
+	})
+
+	-- web
+	use({
+		"vuki656/package-info.nvim",
+		opt = true,
+		requires = {
+			"MunifTanjim/nui.nvim",
+		},
+		wants = { "nui.nvim" },
+		module = { "package-info" },
+		ft = { "json" },
+		config = function()
+			require("config.package").setup()
+		end,
+		disable = false,
+	})
+
+	-- Kotlin
+	use({ "udalov/kotlin-vim", ft = { "kotlin" }, disable = true })
+
+	-- Flutter
+	use({
+		"akinsho/flutter-tools.nvim",
+		requires = { "nvim-lua/plenary.nvim" },
+		disable = true,
+	})
+
+	-- Go
+	use({
+		"ray-x/go.nvim",
+		ft = { "go" },
+		config = function()
+			require("go").setup()
+		end,
+	})
+
+	-- Rust
+	use({
+		"simrat39/rust-tools.nvim",
+		requires = { "nvim-lua/plenary.nvim", "rust-lang/rust.vim" },
+		module = "rust-tools",
+		ft = { "rust" },
+	})
+	use({
+		"saecki/crates.nvim",
+		event = { "BufRead Cargo.toml" },
+		requires = { { "nvim-lua/plenary.nvim" } },
+		config = function()
+			-- local null_ls = require "null-ls"
+			require("crates").setup({
+				null_ls = {
+					enabled = true,
+					name = "crates.nvim",
+				},
+			})
+		end,
+	})
+
+	-- Usefull plugins
+	use({
+		"m-demare/attempt.nvim",
+		requires = "nvim-lua/plenary.nvim",
+		module = { "attempt" },
+	})
+
+	-- REPL
+	use({
+		"hkupty/iron.nvim",
+	})
+
+	-- View and search LSP symbols
+	use({
+		"liuchengxu/vista.vim",
+		cmd = { "Vista" },
+		config = function()
+			vim.g.vista_default_executive = "nvim_lsp"
+		end,
+	})
+
+	-- Diffview
+	use({
+		"sindrets/diffview.nvim",
+		requires = "nvim-lua/plenary.nvim",
+		cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles" },
+	})
+
+	-- Plugin
+	use({
+		"tpope/vim-scriptease",
+		cmd = {
+			"Messages", --view messages in quickfix list
+			"Verbose", -- view verbose output in preview window.
+			"Time", -- measure how long it takes to run some stuff.
+		},
+		event = "BufReadPre",
+	})
+
+	-- Quickfix
+	use({ "romainl/vim-qf", event = "BufReadPre", disable = true })
+
+	-- Refactoring
+	use({
+
+		"ThePrimeagen/refactoring.nvim",
+		module = { "refactoring", "telescope" },
+		keys = { [[<leader>r]] },
+		wants = { "telescope.nvim" },
+	})
+
+	-- Test
+	use({
+		"nvim-neotest/neotest",
+		wants = {
+			"plenary.nvim",
+			"nvim-treesitter",
+			"FixCursorHold.nvim",
+			"neotest-python",
+			"neotest-plenary",
+			"neotest-go",
+			"neotest-jest",
+			"neotest-vim-test",
+		},
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-neotest/neotest-python",
+			"nvim-neotest/neotest-plenary",
+			"nvim-neotest/neotest-go",
+			"haydenmeade/neotest-jest",
+			"nvim-neotest/neotest-vim-test",
+		},
+		module = { "neotest" },
+	})
+
+	-- Debugging
+	use({
+		"mfussenegger/nvim-dap",
+		keys = { [[<leader>d]] },
+		module = { "dap" },
+		wants = { "nvim-dap-virtual-text", "DAPInstall.nvim", "nvim-dap-ui", "nvim-dap-python", "which-key.nvim" },
+		requires = {
+			"alpha2phi/DAPInstall.nvim",
+			-- { "Pocco81/dap-buddy.nvim", branch = "dev" },
+			"theHamsta/nvim-dap-virtual-text",
+			"rcarriga/nvim-dap-ui",
+			"mfussenegger/nvim-dap-python",
+			"nvim-telescope/telescope-dap.nvim",
+			{ "leoluz/nvim-dap-go", module = "dap-go" },
+			{ "jbyuki/one-small-step-for-vimkind", module = "osv" },
+		},
 	})
 
 	-- Automatically set up your configuration after cloning packer.nvim

@@ -63,7 +63,11 @@ keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("n", "<leader>ea", "<cmd>EasyAlign<CR>", opts)
 keymap("v", "<leader>ea", ":'<,'>EasyAlign<CR>", opts)
 
-keymap("v", "<leader>sr", ":SnipRun<CR>", opts)
-keymap("n", "<leader>sr", ":SnipRun<CR>", opts)
-keymap("n", "<leader>sx", ":SnipClose<CR>", opts)
-keymap("n", "<leader>si", ":SnipInfo<CR>", opts)
+-- keymap("v", "<leader>sr", ":SnipRun<CR>", opts)
+-- keymap("n", "<leader>sr", ":SnipRun<CR>", opts)
+-- keymap("n", "<leader>sx", ":SnipClose<CR>", opts)
+-- keymap("n", "<leader>si", ":SnipInfo<CR>", opts)
+
+-- keymap("n", "<leader>ic", "<Plug>", opts)
+
+keymap("n", "gx", "<Plug>(openbrowser-smart-search)", opts)
