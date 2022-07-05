@@ -55,22 +55,21 @@ if present1 and present2 and present3 and present4 then
 	end
 
 	local function configure_debuggers()
-		require("config.dap.lua").setup()
-		require("config.dap.python").setup()
-		require("config.dap.rust").setup()
-		require("config.dap.go").setup()
-		require("config.dap.csharp").setup()
-		require("config.dap.kotlin").setup()
-		require("config.dap.typescript").setup()
+		require("modules.dap.lua").setup()
+		require("modules.dap.python").setup()
+		require("modules.dap.rust").setup()
+		require("modules.dap.go").setup()
+		require("modules.dap.csharp").setup()
+		require("modules.dap.kotlin").setup()
+		require("modules.dap.typescript").setup()
 	end
 
 	function setup()
 		configure() -- Configuration
 		configure_exts() -- Extensions
 		configure_debuggers() -- Debugger
-		require("config.dap.keymaps").setup() -- Keymaps
+		require("modules.dap.keymaps").setup() -- Keymaps
 	end
 
-	configure_debuggers()
     setup()
 end

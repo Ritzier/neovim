@@ -6,4 +6,3 @@ end
 require("modules.lsp.configs")
 require("modules.lsp.handlers").setup()
 require("modules.lsp.null-ls")
-

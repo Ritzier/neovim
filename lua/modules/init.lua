@@ -59,7 +59,7 @@ return packer.startup(function(use)
 	use({ "goolord/alpha-nvim" })
 	use("folke/which-key.nvim")
 	use({ "nathom/filetype.nvim" })
-    use({"mrjones2014/legendary.nvim"})
+	use({ "mrjones2014/legendary.nvim" })
 
 	-- Colorschemes
 	use("EdenEast/nightfox.nvim")
@@ -80,6 +80,30 @@ return packer.startup(function(use)
 	use({ "neovim/nvim-lspconfig" }) -- enable LSP
 	use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
 	use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
+	use({
+		"glepnir/lspsaga.nvim",
+		config = function()
+			require("lspsaga").init_lsp_saga()
+		end,
+	})
+	-- Other plugins
+	use({ "folke/lua-dev.nvim" })
+	use({ "RRethy/vim-illuminate" })
+	use({
+		"j-hui/fidget.nvim",
+		config = function()
+			require("fidget")
+		end,
+	})
+	use({
+		"jose-elias-alvarez/typescript.nvim",
+	})
+	use({
+		"SmiteshP/nvim-navic",
+		config = function()
+			require("nvim-navic").setup()
+		end,
+	})
 
 	-- Trouble
 	use({
@@ -128,14 +152,14 @@ return packer.startup(function(use)
 		wants = "nvim-treesitter",
 		event = "InsertEnter",
 	})
-    use({
-        "RRethy/nvim-treesitter-endwise",
-        after = "nvim-treesitter"
-    })
-    use({
-        "p00f/nvim-ts-rainbow",
-        after = "nvim-treesitter"
-    })
+	use({
+		"RRethy/nvim-treesitter-endwise",
+		after = "nvim-treesitter",
+	})
+	use({
+		"p00f/nvim-ts-rainbow",
+		after = "nvim-treesitter",
+	})
 
 	-- Git
 	use({ "lewis6991/gitsigns.nvim" })
@@ -215,6 +239,12 @@ return packer.startup(function(use)
 				},
 			})
 		end,
+	})
+
+	-- Java
+	use({
+		"mfussenegger/nvim-jdtls",
+		ft = { "java" },
 	})
 
 	-- Usefull plugins
@@ -310,6 +340,9 @@ return packer.startup(function(use)
 			{ "leoluz/nvim-dap-go", module = "dap-go" },
 			{ "jbyuki/one-small-step-for-vimkind", module = "osv" },
 		},
+	})
+	use({
+		"theHamsta/nvim-dap-virtual-text",
 	})
 
 	-- Automatically set up your configuration after cloning packer.nvim
