@@ -51,7 +51,7 @@ return packer.startup(function(use)
 	use({ "kyazdani42/nvim-tree.lua" })
 	use({ "akinsho/bufferline.nvim" })
 	use({ "moll/vim-bbye" })
-	use({ "nvim-lualine/lualine.nvim" })
+	use({ "nvim-lualine/lualine.nvim", after="nvim-gps" })
 	use({ "akinsho/toggleterm.nvim" })
 	use({ "ahmedkhalf/project.nvim" })
 	use({ "lewis6991/impatient.nvim" })
@@ -84,7 +84,7 @@ return packer.startup(function(use)
 		"glepnir/lspsaga.nvim",
 		config = function()
 			require("lspsaga").init_lsp_saga()
-		end,
+        end,
 	})
 	-- Other plugins
 	use({ "folke/lua-dev.nvim" })

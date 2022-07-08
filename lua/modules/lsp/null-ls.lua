@@ -40,13 +40,11 @@ null_ls.setup({
         diagnostics.zsh,
 
         -- Code Action
-        code_actions.gitsigns.with{
-            disable_filetypes = { "NeogitCommitMessage" },
-        },
         code_actions.eslint_d,
         code_actions.gitrebase,
         code_actions.refactoring,
         code_actions.proselint,
         code_actions.shellcheck,
+        code_actions.gitsigns,
 	},
 })
