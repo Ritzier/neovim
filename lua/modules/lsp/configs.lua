@@ -198,7 +198,7 @@ local on_attach = function(client, bufnr)
     buf_map(bufnr, "n", "ga", ":LspCodeAction<CR>")
     buf_map(bufnr, "n", "<Leader>a", ":LspDiagLine<CR>")
     buf_map(bufnr, "i", "<C-x><C-x>", "<cmd> LspSignatureHelp<CR>")
-    if client.resolved_capabilities.document_formatting then
+    if client.server_capabilities.documentFormattingProvider then
         vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
     end
     navic.attach(client, bufnr)
@@ -232,10 +232,10 @@ vim.diagnostic.config({
 })
 
 for _, server in pairs(servers) do
-    local has_custom_opts, server_custom_opts = pcall(require, "modules.lsp.settings." .. server)
-    if has_custom_opts then
-        opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
-    end
+    -- local has_custom_opts, server_custom_opts = pcall(require, "modules.lsp.settings." .. server)
+    -- if has_custom_opts then
+    --     opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
+    -- end
 
     if server == "jsonls" then
         if schemas then
@@ -301,7 +301,7 @@ for _, server in pairs(servers) do
         })
     elseif server == "tsserver" then
         on_attach = function(client, bufnr)
-            client.resolved_capabilities.document_formatting = false
+            client.server_capabilities.documentFormattingProvider = false
             client.resolved_capabilities.document_range_formatting = false
             local ts_utils = require("nvim-lsp-ts-utils")
             ts_utils.setup({})
