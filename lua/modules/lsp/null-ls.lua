@@ -29,6 +29,7 @@ null_ls.setup({
 		formatting.stylua,
 		formatting.google_java_format,
         formatting.djhtml,
+        formatting.prettier,
 
 		-- diagnostics
 		diagnostics.write_good,
