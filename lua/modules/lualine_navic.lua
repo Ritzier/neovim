@@ -1,22 +1,20 @@
-local status_ok, lualine = pcall(require, "lualine")
-local status_ok2, gps = pcall(require, "nvim-gps")
-if not status_ok and status_ok2 then
-	return
+local plugins = {"lualine", "nvim-navic"}
+for _, plug in ipairs(plugins) do
+    if not pcall(require, plug) then
+        print(plug .. " not work")
+        return
+    end
 end
 
-local hide_in_width = function()
+local branch = {
+	"branch",
+	icons_enabled = true,
+	icon = "",
+}
+
+local function hide_in_width()
 	return vim.fn.winwidth(0) > 80
 end
-
-local diagnostics = {
-	"diagnostics",
-	sources = { "nvim_diagnostic" },
-	sections = { "error", "warn" },
-	symbols = { error = " ", warn = " " },
-	colored = false,
-	update_in_insert = false,
-	always_visible = true,
-}
 
 local diff = {
 	"diff",
@@ -29,57 +27,6 @@ local diff = {
 	cond = hide_in_width,
 }
 
-local mode = {
-	"mode",
-	fmt = function(str)
-		return "-- " .. str .. " --"
-	end,
-}
-
-local filetype = {
-	"filetype",
-	colored = true,
-	icons_enabled = true,
-	icon_only = false,
-	icon = { align = "right" },
-}
-
-local branch = {
-	"branch",
-	icons_enabled = true,
-	icon = "",
-}
-
-local location = {
-	"location",
-}
-
--- cool function for progress
-local progress = function()
-	local current_line = vim.fn.line(".")
-	local total_lines = vim.fn.line("$")
-	local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
-	local line_ratio = current_line / total_lines
-	local index = math.ceil(line_ratio * #chars)
-	return chars[index]
-end
-
-local test_progress = function()
-	local current_line = vim.fn.line(".")
-	local total_line = vim.fn.line("$")
-	local text = math.modf((current_line / total_line) * 100) .. tostring("%%")
-	return text
-end
-
-local max_file_line = function()
-	local line = vim.fn.line("$")
-	return line
-end
-
-local spaces = function()
-	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
-end
-
 local diag = {
 	"diagnostics",
 	sources = { "nvim_diagnostic" },
@@ -91,15 +38,39 @@ local diag = {
 	},
 }
 
+local filetype = {
+	"filetype",
+	colored = true,
+	icons_enabled = true,
+	icon_only = false,
+	icon = { align = "right" },
+}
+
+local location = {
+	"location",
+}
+
+local max_file_line = function()
+	local line = vim.fn.line("$")
+	return line
+end
+
+local test_progress = function()
+	local current_line = vim.fn.line(".")
+	local total_line = vim.fn.line("$")
+	local text = math.modf((current_line / total_line) * 100) .. tostring("%%")
+	return text
+end
+
 local function z()
 	local line = max_file_line()
 	local pro = test_progress()
 	return pro .. "/" .. line
 end
 
-local gps = require("nvim-gps")
+local navic = require("nvim-navic")
 
-lualine.setup({
+require("lualine").setup({
 	options = {
 		icons_enabled = true,
 		theme = "nightfox",
@@ -114,7 +85,7 @@ lualine.setup({
 		},
 		lualine_b = { branch, diff },
 		lualine_c = {
-            { gps.get_location, cond = gps.is_available },
+            { navic.get_location, cond = navic.is_available },
         },
 		lualine_x = { diag, filetype },
 		lualine_y = { location },

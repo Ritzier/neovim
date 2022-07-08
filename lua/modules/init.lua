@@ -282,6 +282,9 @@ return packer.startup(function(use)
 		event = "BufReadPre",
 	})
 
+    -- Symbols outline
+    use({"simrat39/symbols-outline.nvim"})
+
 	-- Quickfix
 	use({ "romainl/vim-qf", event = "BufReadPre", disable = true })
 
