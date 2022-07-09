@@ -161,7 +161,7 @@ local function lua_snip()
     })
 end
 
-local servers = { "sourcekit", "jsonls", "pyright", "sumneko_lua", "rust_analyzer", "jdtls", "tsserver", "bashls", "gopls" }
+local servers = { "sourcekit", "jsonls", "pyright", "sumneko_lua", "rust_analyzer", "jdtls", "tsserver", "bashls", "gopls", "julials" }
 
 local lspconfig = require("lspconfig")
 local schemas, _ = pcall(require, "schemastore")
