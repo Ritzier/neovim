@@ -1,75 +1,92 @@
-local present1, _ = pcall(require, "nvim-dap-virtual-text")
-local present2, _ = pcall(require, "dap-install")
-local present3, _ = pcall(require, "dap")
-local present4, _ = pcall(require, "dapui")
-
-if present1 and present2 and present3 and present4 then
-	local function configure()
-		local dap_install = require("dap-install")
-		dap_install.setup({
-			installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-		})
-
-		local dap_breakpoint = {
-			error = {
-				text = "🟥",
-				texthl = "LspDiagnosticsSignError",
-				linehl = "",
-				numhl = "",
-			},
-			rejected = {
-				text = "",
-				texthl = "LspDiagnosticsSignHint",
-				linehl = "",
-				numhl = "",
-			},
-			stopped = {
-				text = "⭐️",
-				texthl = "LspDiagnosticsSignInformation",
-				linehl = "DiagnosticUnderlineInfo",
-				numhl = "LspDiagnosticsSignInformation",
-			},
-		}
-
-		vim.fn.sign_define("DapBreakpoint", dap_breakpoint.error)
-		vim.fn.sign_define("DapStopped", dap_breakpoint.stopped)
-		vim.fn.sign_define("DapBreakpointRejected", dap_breakpoint.rejected)
-	end
-
-	local function configure_exts()
-		require("nvim-dap-virtual-text").setup({
-			commented = true,
-		})
-
-		local dap, dapui = require("dap"), require("dapui")
-		dapui.setup({}) -- use default
-		dap.listeners.after.event_initialized["dapui_config"] = function()
-			dapui.open()
-		end
-		dap.listeners.before.event_terminated["dapui_config"] = function()
-			dapui.close()
-		end
-		dap.listeners.before.event_exited["dapui_config"] = function()
-			dapui.close()
-		end
-	end
-
-	local function configure_debuggers()
-		require("modules.dap.lua").setup()
-		require("modules.dap.python").setup()
-		require("modules.dap.rust").setup()
-		require("modules.dap.go").setup()
-		require("modules.dap.csharp").setup()
-		require("modules.dap.kotlin").setup()
-		require("modules.dap.typescript").setup()
-	end
-
-	function setup()
-		configure() -- Configuration
-		configure_exts() -- Extensions
-		configure_debuggers() -- Debugger
-		require("modules.dap.keymaps").setup() -- Keymaps
-	end
-
-    setup()
+local plugins = { "dap", "dapui" }
+for _, plug in ipairs(plugins) do
+    if not pcall(require, plug) then
+        print(plug .. " not work")
+        return
+    end
 end
+
+local dap, dapui = require("dap"), require("dapui")
+
+require("dapui").setup({
+    icons = { expanded = "▾", collapsed = "▸" },
+    mappings = {
+        -- Use a table to apply multiple mappings
+        expand = { "<CR>", "<2-LeftMouse>" },
+        open = "o",
+        remove = "d",
+        edit = "e",
+        repl = "r",
+    },
+    layouts = {
+        {
+            elements = {
+                -- Provide as ID strings or tables with "id" and "size" keys
+                {
+                    id = "scopes",
+                    size = 0.25, -- Can be float or integer > 1
+                },
+                { id = "breakpoints", size = 0.25 },
+                { id = "stacks", size = 0.25 },
+                { id = "watches", size = 0.25 },
+            },
+            size = 40,
+            position = "left",
+        },
+        { elements = { "repl" }, size = 10, position = "bottom" },
+    },
+    floating = {
+        max_height = nil,
+        max_width = nil,
+        mappings = { close = { "q", "<Esc>" } },
+    },
+    windows = { indent = 1 },
+})
+
+dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+end
+dap.listeners.after.event_terminated["dapui_config"] = function()
+    dapui.close()
+end
+dap.listeners.after.event_exited["dapui_config"] = function()
+    dapui.close()
+end
+
+vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
+
+dap.adapters.lldb = {
+    type = "executable",
+    command = "/usr/bin/lldb-vscode",
+    name = "lldb",
+}
+
+dap.adapters.python = {
+    type = "executable",
+    command = "/usr/bin/python3.9",
+    args = { "-m", "debugpy.adapter" },
+}
+dap.configurations.python = {
+    {
+        -- The first three options are required by nvim-dap
+        type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
+        request = "launch",
+        name = "Launch file",
+        -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
+
+        program = "${file}", -- This configuration will launch the current file if used.
+        pythonPath = function()
+            -- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
+            -- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
+            -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
+            local cwd = vim.fn.getcwd()
+            if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
+                return cwd .. "/venv/bin/python"
+            elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
+                return cwd .. "/.venv/bin/python"
+            else
+                return "/usr/bin/python"
+            end
+        end,
+    },
+}
