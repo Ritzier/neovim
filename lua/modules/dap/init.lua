@@ -59,3 +59,5 @@ dap.adapters.lldb = {
 }
 
 require("modules.dap.config.python").setup()
+
+require("modules.dap.keymaps").setup()

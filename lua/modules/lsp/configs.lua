@@ -9,10 +9,9 @@ end
 local luasnip = require("luasnip")
 
 local check_backspace = function()
-	local col = vim.fn.col(".") - 1
-	return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
+    local col = vim.fn.col(".") - 1
+    return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 end
-
 
 local function nvim_cmp()
     local cmp = require("cmp")
@@ -77,7 +76,6 @@ local function nvim_cmp()
                     path = "[Path]",
                 })[entry.source.name]
                 return vim_item
-
             end,
         },
         -- You can set mappings if you want
@@ -161,7 +159,20 @@ local function lua_snip()
     })
 end
 
-local servers = { "sourcekit", "jsonls", "pyright", "sumneko_lua", "rust_analyzer", "jdtls", "tsserver", "bashls", "gopls", "julials" }
+local servers = {
+    "sourcekit",
+    "jsonls",
+    "pyright",
+    "sumneko_lua",
+    "rust_analyzer",
+    "jdtls",
+    "tsserver",
+    "bashls",
+    "gopls",
+    "julials",
+   -- "clangd",
+    "tsserver",
+}
 
 local lspconfig = require("lspconfig")
 local schemas, _ = pcall(require, "schemastore")
@@ -204,10 +215,12 @@ local on_attach = function(client, bufnr)
     navic.attach(client, bufnr)
 end
 
+local capabilities = require("modules.lsp.handlers")
+
 local opts = {
     -- on_attach = require("modules.lsp.handlers").on_attach,
     on_attach = on_attach,
-    capabilities = require("modules.lsp.handlers").capabilities,
+    capabilities = capabilities,
 }
 
 local signs = {
@@ -250,6 +263,19 @@ for _, server in pairs(servers) do
         else
             lspconfig[server].setup(opts)
         end
+    elseif server == "html" then
+        lspconfig[server].setup({
+            cmd = {"html-languageserver", "--stdio"},
+            filetypes = {"html"},
+            init_options = {
+                configurationSection = {"html", "css", "javascript"},
+                embeddedLanguage = {css=true, javascript=true},
+            },
+            settings = {},
+            single_file_support = true,
+            flags = { debounce_text_chagnes = 500 },
+            opts
+        })
     elseif server == "sumneko_lua" then
         lspconfig[server].setup({
             settings = {
@@ -322,6 +348,63 @@ for _, server in pairs(servers) do
         else
             lspconfig[server].setup(opts)
         end
+    elseif server == "clangd" then
+        local function switch_source_header_splitcmd(bufnr, splitcmd)
+            bufnr = require("lspconfig").util.validate_bufnr(bufnr)
+            local clangd_client = require("lspconfig").util.get_active_client_by_name(bufnr, "clangd")
+            local params = { uri = vim.uri_from_bufnr(bufnr) }
+            if clangd_client then
+                clangd_client.request("textDocument/switchSourceHeader", params, function(err, result)
+                    if err then
+                        error(tostring(err))
+                    end
+                    if not result then
+                        print("Corresponding file can’t be determined")
+                        return
+                    end
+                    vim.api.nvim_command(splitcmd .. " " .. vim.uri_to_fname(result))
+                end)
+            else
+                print(
+                    "method textDocument/switchSourceHeader is not supported by any servers active on the current buffer"
+                )
+            end
+        end
+
+        local copy_capabilities = capabilities
+        copy_capabilities.offsetEncoding = { "utf-16" }
+        lspconfig[server].setup({
+            capabilities = copy_capabilities,
+            single_file_support = true,
+            on_attach = on_attach,
+            args = {
+                "--background-index",
+                "-std=c++20",
+                "--pch-storage=memory",
+                "--clang-tidy",
+                "--suggest-missing-includes",
+            },
+            commands = {
+                ClangdSwitchSourceHeader = {
+                    function()
+                        switch_source_header_splitcmd(0, "edit")
+                    end,
+                    description = "Open source/header in current buffer",
+                },
+                ClangdSwitchSourceHeaderVSplit = {
+                    function()
+                        switch_source_header_splitcmd(0, "vsplit")
+                    end,
+                    description = "Open source/header in a new vsplit",
+                },
+                ClangdSwitchSourceHeaderSplit = {
+                    function()
+                        switch_source_header_splitcmd(0, "split")
+                    end,
+                    description = "Open source/header in a new split",
+                },
+            },
+        })
     else
         lspconfig[server].setup(opts)
     end

@@ -104,6 +104,7 @@ return packer.startup(function(use)
             require("nvim-navic").setup()
         end,
     })
+    use({"tpope/vim-dadbod"})
 
     -- Trouble
     use({

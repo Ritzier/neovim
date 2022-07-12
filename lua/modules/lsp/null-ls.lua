@@ -30,15 +30,16 @@ null_ls.setup({
 		formatting.google_java_format,
         formatting.djhtml,
         formatting.prettier,
+        formatting.uncrustify,
 
 		-- diagnostics
 		diagnostics.write_good,
 		diagnostics.eslint_d,
 		diagnostics.flake8,
 		diagnostics.tsc,
-
         with_diagnostics_code(diagnostics.shellcheck),
         diagnostics.zsh,
+        diagnostics.cppcheck,
 
         -- Code Action
         code_actions.eslint_d,
