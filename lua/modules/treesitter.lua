@@ -1,11 +1,4 @@
-local status_ok, configs = pcall(require, "nvim-treesitter.configs")
-if not status_ok then
-	return
-end
-
-local present1, _ = pcall(require, "nvim-treesitter-endwise")
-local present2, _ = pcall(require, "nvim-ts-rainbow")
-
+local configs = require("nvim-treesitter.configs")
 configs.setup({
 	ensure_installed = "all", -- one of "all" or a list of languages
 	ignore_install = { "" }, -- List of parsers to ignore installing
@@ -19,4 +12,15 @@ configs.setup({
 	indent = { enable = true, disable = { "python", "css" } },
     rainbow = { enable = true },
     endwise = { enable = true },
+    autotag = {
+        enable = true, 
+        filetypes = {
+            "html",
+            "xml",
+            "javascript",
+            "typescriptreact",
+            "javascriptreact",
+            "vue",
+        },
+    }
 })

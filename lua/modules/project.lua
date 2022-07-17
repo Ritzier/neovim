@@ -1,7 +1,4 @@
-local status_ok, project = pcall(require, "project_nvim")
-if not status_ok then
-	return
-end
+local project = require("project_nvim")
 project.setup({
 	---@usage set to false to disable project.nvim.
 	--- This is on by default since it's currently the expected behavior.

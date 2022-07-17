@@ -44,6 +44,7 @@ return packer.startup(function(use)
 
     use({ "wbthomason/packer.nvim" }) -- Have packer manage itself
     use({ "nvim-lua/plenary.nvim" }) -- Useful lua functions used by lots of plugins
+    use({"rcarriga/nvim-notify"})
     use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
     use({ "numToStr/Comment.nvim" })
     use({ "JoosepAlviste/nvim-ts-context-commentstring" })
@@ -63,6 +64,10 @@ return packer.startup(function(use)
 
     -- Colorschemes
     use("EdenEast/nightfox.nvim")
+    use({"folke/tokyonight.nvim"})
+    use({"rose-pine/neovim", as="rose-pine"})
+    use({"catppuccin/nvim", as="catppuccin"})
+    use({"ellisonleao/gruvbox.nvim"})
 
     -- cmp plugins
     use({ "hrsh7th/nvim-cmp" }) -- The completion plugin

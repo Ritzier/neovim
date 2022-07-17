@@ -1,8 +1,3 @@
-if not pcall(require, "symbols-outline") then
-    print("Symbol not work")
-    return
-end
-
 vim.g.symbols_outline = {
     highlight_hovered_item = true,
     show_guides = true,

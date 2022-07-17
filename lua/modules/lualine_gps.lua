@@ -1,11 +1,3 @@
-local plugins = {"lualine", "nvim-navic"}
-for _, plug in ipairs(plugins) do
-    if not pcall(require, plug) then
-        print(plug .. " not work")
-        return
-    end
-end
-
 local branch = {
 	"branch",
 	icons_enabled = true,
