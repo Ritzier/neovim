@@ -1,28 +1,95 @@
+local function get_modified_palette()
+	-- We need to explicitly declare our new color.
+	-- (Because colors haven't been set yet when we pass them to the setup function.)
+
+	local cp = require("catppuccin.palettes").get_palette() -- Get the palette.
+	cp.none = "NONE" -- Special setting for complete transparent fg/bg.
+
+	if vim.g.catppuccin_flavour == "mocha" then -- We only modify the "mocha" palette.
+		cp.rosewater = "#F5E0DC"
+		cp.flamingo = "#F2CDCD"
+		cp.mauve = "#DDB6F2"
+		cp.pink = "#F5C2E7"
+		cp.red = "#F28FAD"
+		cp.maroon = "#E8A2AF"
+		cp.peach = "#F8BD96"
+		cp.yellow = "#FAE3B0"
+		cp.green = "#ABE9B3"
+		cp.blue = "#96CDFB"
+		cp.sky = "#89DCEB"
+		cp.teal = "#B5E8E0"
+		cp.lavender = "#C9CBFF"
+
+		cp.text = "#D9E0EE"
+		cp.subtext1 = "#BAC2DE"
+		cp.subtext0 = "#A6ADC8"
+		cp.overlay2 = "#C3BAC6"
+		cp.overlay1 = "#988BA2"
+		cp.overlay0 = "#6E6C7E"
+		cp.surface2 = "#6E6C7E"
+		cp.surface1 = "#575268"
+		cp.surface0 = "#302D41"
+
+		cp.base = "#1E1E2E"
+		cp.mantle = "#1A1826"
+		cp.crust = "#161320"
+	end
+
+	return cp
+end
+
+
+local function set_auto_compile(enable_compile)
+	-- Setting auto-compile for catppuccin.
+	if enable_compile then
+		vim.api.nvim_create_augroup("_catppuccin", { clear = true })
+
+		vim.api.nvim_create_autocmd("User", {
+			group = "_catppuccin",
+			pattern = "PackerCompileDone",
+			callback = function()
+				require("catppuccin").compile()
+				vim.defer_fn(function()
+					vim.cmd([[colorscheme catppuccin]])
+				end, 0)
+			end,
+		})
+	end
+end
+
+vim.g.catppuccin_flavour = "mocha" -- Set flavour here
+local cp = get_modified_palette()
+
+local enable_compile = true -- Set to false if you would like to disable catppuccin cache. (Not recommended)
+set_auto_compile(enable_compile)
+
 require("catppuccin").setup({
 	dim_inactive = {
 		enabled = false,
+		-- Dim inactive splits/windows/buffers.
+		-- NOT recommended if you use old palette (a.k.a., mocha).
 		shade = "dark",
 		percentage = 0.15,
 	},
 	transparent_background = false,
 	term_colors = true,
 	compile = {
-		enabled = false,
-		path = vim.fn.stdpath "cache" .. "/catppuccin",
+		enabled = enable_compile,
+		path = vim.fn.stdpath("cache") .. "/catppuccin",
 	},
 	styles = {
 		comments = { "italic" },
-		conditionals = { "italic" },
-		loops = {},
-		functions = {},
-		keywords = {},
+		properties = { "italic" },
+		functions = { "italic", "bold" },
+		keywords = { "italic" },
+		operators = { "bold" },
+		conditionals = { "bold" },
+		loops = { "bold" },
+		booleans = { "bold", "italic" },
+		numbers = {},
+		types = {},
 		strings = {},
 		variables = {},
-		numbers = {},
-		booleans = {},
-		properties = {},
-		types = {},
-		operators = {},
 	},
 	integrations = {
 		treesitter = true,
@@ -41,33 +108,14 @@ require("catppuccin").setup({
 				information = { "underline" },
 			},
 		},
-		coc_nvim = false,
-		lsp_trouble = false,
-		cmp = true,
-		lsp_saga = false,
+		lsp_trouble = true,
+		lsp_saga = true,
 		gitgutter = false,
 		gitsigns = true,
-		leap = false,
 		telescope = true,
-		nvimtree = {
-			enabled = true,
-			show_root = true,
-			transparent_panel = false,
-		},
-		neotree = {
-			enabled = false,
-			show_root = true,
-			transparent_panel = false,
-		},
-		dap = {
-			enabled = false,
-			enable_ui = false,
-		},
-		which_key = false,
-		indent_blankline = {
-			enabled = true,
-			colored_indent_levels = false,
-		},
+		nvimtree = { enabled = true, show_root = true },
+		which_key = true,
+		indent_blankline = { enabled = true, colored_indent_levels = false },
 		dashboard = true,
 		neogit = false,
 		vim_sneak = false,
@@ -76,58 +124,156 @@ require("catppuccin").setup({
 		bufferline = true,
 		markdown = true,
 		lightspeed = false,
-		ts_rainbow = false,
-		hop = false,
+		ts_rainbow = true,
+		hop = true,
+		cmp = true,
+		dap = { enabled = true, enable_ui = true },
 		notify = true,
-		telekasten = true,
-		symbols_outline = true,
+		symbols_outline = false,
+		coc_nvim = false,
+		leap = false,
+		neotree = { enabled = false, show_root = true, transparent_panel = false },
+		telekasten = false,
 		mini = false,
 		aerial = false,
 		vimwiki = true,
-		beacon = true,
-		navic = false,
+		beacon = false,
+		navic = true,
 		overseer = false,
 	},
-	color_overrides = {},
-	highlight_overrides = {},
+	color_overrides = {
+		mocha = {
+			rosewater = "#F5E0DC",
+			flamingo = "#F2CDCD",
+			mauve = "#DDB6F2",
+			pink = "#F5C2E7",
+			red = "#F28FAD",
+			maroon = "#E8A2AF",
+			peach = "#F8BD96",
+			yellow = "#FAE3B0",
+			green = "#ABE9B3",
+			blue = "#96CDFB",
+			sky = "#89DCEB",
+			teal = "#B5E8E0",
+			lavender = "#C9CBFF",
+
+			text = "#D9E0EE",
+			subtext1 = "#BAC2DE",
+			subtext0 = "#A6ADC8",
+			overlay2 = "#C3BAC6",
+			overlay1 = "#988BA2",
+			overlay0 = "#6E6C7E",
+			surface2 = "#6E6C7E",
+			surface1 = "#575268",
+			surface0 = "#302D41",
+
+			base = "#1E1E2E",
+			mantle = "#1A1826",
+			crust = "#161320",
+		},
+	},
+	highlight_overrides = {
+		mocha = {
+			-- For base configs.
+			CursorLineNr = { fg = cp.green },
+			Search = { bg = cp.surface1, fg = cp.pink, style = { "bold" } },
+			IncSearch = { bg = cp.pink, fg = cp.surface1 },
+
+			-- For native lsp configs.
+			DiagnosticVirtualTextError = { bg = cp.none },
+			DiagnosticVirtualTextWarn = { bg = cp.none },
+			DiagnosticVirtualTextInfo = { bg = cp.none },
+			DiagnosticVirtualTextHint = { fg = cp.rosewater, bg = cp.none },
+
+			DiagnosticHint = { fg = cp.rosewater },
+			DiagnosticUnderlineInfo = { sp = cp.rosewater },
+			LspDiagnosticsDefaultHint = { fg = cp.rosewater },
+			LspDiagnosticsHint = { fg = cp.rosewater },
+			LspDiagnosticsVirtualTextHint = { fg = cp.rosewater },
+			LspDiagnosticsUnderlineHint = { sp = cp.rosewater },
+
+			-- For Ts-Rainbow
+			rainbowcol1 = { bg = cp.none },
+			rainbowcol2 = { bg = cp.none },
+			rainbowcol3 = { bg = cp.none },
+			rainbowcol4 = { bg = cp.none },
+			rainbowcol5 = { bg = cp.none },
+			rainbowcol6 = { bg = cp.none },
+			rainbowcol7 = { bg = cp.none },
+
+			-- For treesitter.
+			TSField = { fg = cp.rosewater },
+			TSProperty = { fg = cp.yellow },
+
+			TSInclude = { fg = cp.teal },
+			TSOperator = { fg = cp.sky },
+			TSKeywordOperator = { fg = cp.sky },
+			TSPunctSpecial = { fg = cp.maroon },
+
+			-- TSFloat = { fg = cp.peach },
+			-- TSNumber = { fg = cp.peach },
+			-- TSBoolean = { fg = cp.peach },
+
+			TSConstructor = { fg = cp.lavender },
+			-- TSConstant = { fg = cp.peach },
+			-- TSConditional = { fg = cp.mauve },
+			-- TSRepeat = { fg = cp.mauve },
+			TSException = { fg = cp.peach },
+
+			TSConstBuiltin = { fg = cp.lavender },
+			-- TSFuncBuiltin = { fg = cp.peach, style = { "italic" } },
+			-- TSTypeBuiltin = { fg = cp.yellow, style = { "italic" } },
+			TSVariableBuiltin = { fg = cp.red, style = { "italic" } },
+
+			-- TSFunction = { fg = cp.blue },
+			TSFuncMacro = { fg = cp.red, style = {} },
+			TSParameter = { fg = cp.rosewater },
+			TSKeywordFunction = { fg = cp.maroon },
+			TSKeyword = { fg = cp.red },
+			TSKeywordReturn = { fg = cp.pink, style = {} },
+
+			-- TSNote = { fg = cp.base, bg = cp.blue },
+			-- TSWarning = { fg = cp.base, bg = cp.yellow },
+			-- TSDanger = { fg = cp.base, bg = cp.red },
+			-- TSConstMacro = { fg = cp.mauve },
+
+			-- TSLabel = { fg = cp.blue },
+			TSMethod = { style = { "italic" } },
+			TSNamespace = { fg = cp.rosewater },
+
+			TSPunctDelimiter = { fg = cp.teal },
+			TSPunctBracket = { fg = cp.overlay2 },
+			-- TSString = { fg = cp.green },
+			-- TSStringRegex = { fg = cp.peach },
+			-- TSType = { fg = cp.yellow },
+			TSVariable = { fg = cp.text },
+			TSTagAttribute = { fg = cp.mauve, style = { "italic" } },
+			TSTag = { fg = cp.peach },
+			TSTagDelimiter = { fg = cp.maroon },
+			TSText = { fg = cp.text },
+
+			-- TSURI = { fg = cp.rosewater, style = { "italic", "underline" } },
+			-- TSLiteral = { fg = cp.teal, style = { "italic" } },
+			-- TSTextReference = { fg = cp.lavender, style = { "bold" } },
+			-- TSTitle = { fg = cp.blue, style = { "bold" } },
+			-- TSEmphasis = { fg = cp.maroon, style = { "italic" } },
+			-- TSStrong = { fg = cp.maroon, style = { "bold" } },
+			-- TSStringEscape = { fg = cp.pink },
+
+			bashTSFuncBuiltin = { fg = cp.red, style = { "italic" } },
+			bashTSParameter = { fg = cp.yellow, style = { "italic" } },
+
+			luaTSField = { fg = cp.lavender },
+			luaTSConstructor = { fg = cp.flamingo },
+
+			javaTSConstant = { fg = cp.teal },
+
+			typescriptTSProperty = { fg = cp.lavender, style = { "italic" } },
+
+			cssTSType = { fg = cp.lavender },
+			cssTSProperty = { fg = cp.yellow, style = { "italic" } },
+
+			cppTSProperty = { fg = cp.text },
+		},
+	},
 })
-vim.cmd('colorscheme catppuccin')
-vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#282C34", fg = "NONE" })
-vim.api.nvim_set_hl(0, "Pmenu", {fg = "#C5CDD9", bg = "#22252A"})
-vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { fg = "#7E8294", bg = "NONE" } )
-vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#82AAFF", bg = "NONE", bold=true })
-vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#82AAFF", bg = "NONE", bold=true })
-
-vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#C792EA", bg = "NONE", italic=true })
-vim.api.nvim_set_hl(0, "CmpItemKindField", { fg = "#EED8DA", bg = "#B5585F" })
-vim.api.nvim_set_hl(0, "CmpItemKindProperty", { fg = "#EED8DA", bg = "#B5585F" })
-vim.api.nvim_set_hl(0, "CmpItemKindEvent", { fg = "#EED8DA", bg = "#B5585F" })
-
-vim.api.nvim_set_hl(0, "CmpItemKindText", { fg = "#1a3b47", bg = "#41fa85" })
-vim.api.nvim_set_hl(0, "CmpItemKindEnum", { fg = "#C3E88D", bg = "#0FF500" })
-vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#585858", bg = "#ffd700" })
-
-vim.api.nvim_set_hl(0, "CmpItemKindConstant", { fg = "#FFE082", bg = "#D4BB6C" })
-vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { fg = "#FFE082", bg = "#D4BB6C" })
-vim.api.nvim_set_hl(0, "CmpItemKindReference", { fg = "#FFE082", bg = "#D4BB6C" })
-
-vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = "#EADFF0", bg = "#A377BF" })
-vim.api.nvim_set_hl(0, "CmpItemKindStruct", { fg = "#EADFF0", bg = "#A377BF" })
-vim.api.nvim_set_hl(0, "CmpItemKindClass", { fg = "#EADFF0", bg = "#A377BF" })
-vim.api.nvim_set_hl(0, "CmpItemKindModule", { fg = "#EADFF0", bg = "#A377BF" })
-vim.api.nvim_set_hl(0, "CmpItemKindOperator", { fg = "#EADFF0", bg = "#A377BF" })
-
-vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#C5CDD9", bg = "#7E8294" })
-vim.api.nvim_set_hl(0, "CmpItemKindFile", { fg = "#C5CDD9", bg = "#7E8294" })
-
-vim.api.nvim_set_hl(0, "CmpItemKindUnit", { fg = "#F5EBD9", bg = "#D4A959" })
-vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { fg = "#F5EBD9", bg = "#D4A959" })
-vim.api.nvim_set_hl(0, "CmpItemKindFolder", { fg = "#F5EBD9", bg = "#D4A959" })
-
-vim.api.nvim_set_hl(0, "CmpItemKindMethod", { fg = "#DDE5F5", bg = "#6C8ED4" })
-vim.api.nvim_set_hl(0, "CmpItemKindValue", { fg = "#DDE5F5", bg = "#6C8ED4" })
-vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", { fg = "#DDE5F5", bg = "#6C8ED4" })
-
-vim.api.nvim_set_hl(0, "CmpItemKindInterface", { fg = "#D8EEEB", bg = "#58B5A8" })
-vim.api.nvim_set_hl(0, "CmpItemKindColor", { fg = "#D8EEEB", bg = "#58B5A8" })
-vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { fg = "#D8EEEB", bg = "#58B5A8" })

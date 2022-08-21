@@ -42,6 +42,17 @@ packer.init({
 return packer.startup(function(use)
 	use({ "wbthomason/packer.nvim" })
 
+  use({
+    "mrjones2014/legendary.nvim",
+    opt =true,
+    keys = {[[<C-p>]]},
+    module = {"legendary"},
+    cmd = {"Legendary"},
+    config = function()
+      require("configuration.legendary")
+    end
+  })
+
 	-- Colorscheme
 	use({ "pineapplegiant/spaceduck" })
 
@@ -55,11 +66,19 @@ return packer.startup(function(use)
 
 	--AutoPairs
 	use({
-		"jiangmiao/auto-pairs",
-		config = function()
-			require("configuration.autopairs")
-		end,
+    "windwp/nvim-autopairs",
+    config = function()
+      require("configuration.autopairs")
+    end
 	})
+
+  -- Term
+  use({
+    "akinsho/toggleterm.nvim",
+    config = function()
+      require("configuration.toggleterm")
+    end
+  })
 
 	-- Show color
 	use({
@@ -70,17 +89,6 @@ return packer.startup(function(use)
 		"norcalli/nvim-colorizer.lua",
 		config = function()
       require("configuration.colorizer")
-      -- require("colorizer").setup({
-      --   RGB=true,
-      --   RRGGBB = true,
-      --   names = true,
-      --   RRGGBBAA=true,
-      --   rgb_fn = true,
-      --   hsl_fn = true,
-      --   css_fn=true,
-      --   css=true,
-      --   mode='background',
-      -- })
 		end,
 	})
 
@@ -209,6 +217,10 @@ return packer.startup(function(use)
 	})
 	use({ "Vimjas/vim-python-pep8-indent" })
 	-- Rust
+  use({
+    "rust-lang/rust.vim",
+    ft = "rust",
+  })
 	use({
 		"simrat39/rust-tools.nvim",
 		requires = { "nvim-lua/plenary.nvim", "rust-lang/rust.vim" },
@@ -330,6 +342,9 @@ return packer.startup(function(use)
           require("configuration.trouble")
         end,
       },
+      {
+        "tzachar/cmp-tabnine",
+      }
 		},
 	})
 
@@ -341,6 +356,16 @@ return packer.startup(function(use)
 			require("renamer").setup({})
 		end,
 	})
+
+  -- WhichKey
+  use({
+    "folke/which-key.nvim",
+    event = "VimEnter",
+    config = function()
+      require("configuration.whichkey").setup()
+    end,
+    disable = false
+  })
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
