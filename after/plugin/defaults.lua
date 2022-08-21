@@ -10,6 +10,9 @@ opt.mouse = "a" --Enable mouse mode
 opt.breakindent = true --Enable break indent
 opt.undofile = true --Save undo history
 opt.ignorecase = true --Case insensitive searching unless /C or capital in search
+opt.encoding = "utf-8"
+opt.fileencoding = "utf-8"
+opt.errorbells = false
 opt.smartcase = true -- Smart case
 opt.updatetime = 250 --Decrease update time
 opt.signcolumn = "yes" -- Always show sign column
@@ -27,6 +30,7 @@ opt.textwidth = 0
 opt.autoindent = true
 opt.shiftwidth = 4
 opt.tabstop = 4
+opt.showtabline = 4
 opt.softtabstop = 4
 opt.splitbelow = true
 opt.splitright = true
@@ -37,6 +41,18 @@ opt.cursorline = true
 opt.cursorcolumn = true
 opt.pumheight = 20
 opt.numberwidth = 3
+g.compeleopt = "menu,menuone,noselct"
+
+vim.opt.shortmess:append('c');
+vim.opt.formatoptions:remove('c');
+vim.opt.formatoptions:remove('r');
+vim.opt.formatoptions:remove('o');
+vim.opt.fillchars:append('stl: ');
+vim.opt.fillchars:append('eob: ');
+vim.opt.fillchars:append('fold: ');
+vim.opt.fillchars:append('foldopen: ');
+vim.opt.fillchars:append('foldsep: ');
+vim.opt.fillchars:append('foldclose:');
 
 opt.path:remove "/usr/include"
 opt.path:append "**"
@@ -50,3 +66,5 @@ if vim.g.neovide then
   vim.g.neovide_transparency = 0.9
   vim.g.neovide_fullscreen = true
 end
+
+vim.cmd('filetype plugin indent on')
