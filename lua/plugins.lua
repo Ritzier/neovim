@@ -344,6 +344,7 @@ return packer.startup(function(use)
       },
       {
         "tzachar/cmp-tabnine",
+        run = "bash ./install.sh"
       }
 		},
 	})
