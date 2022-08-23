@@ -249,9 +249,10 @@ return packer.startup(function(use)
   })
   use({
     "simrat39/rust-tools.nvim",
-    requires = { "nvim-lua/plenary.nvim", "rust-lang/rust.vim" },
-    module = "rust-tools",
-    ft = { "rust" },
+    -- requires = { "nvim-lua/plenary.nvim", "rust-lang/rust.vim" },
+    -- module = "rust-tools",
+    -- ft = { "rust" },
+    opt = false,
   })
   use({
     "saecki/crates.nvim",
