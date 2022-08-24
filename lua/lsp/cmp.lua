@@ -11,20 +11,6 @@ function cmp_window:has_scrollbar()
   return false
 end
 
-local border = function(hl)
-  return {
-    { "╭", hl },
-    { "─", hl },
-    { "╮", hl },
-    { "│", hl },
-    { "╯", hl },
-    { "─", hl },
-    { "╰", hl },
-    { "│", hl },
-  }
-end
-
-
 local lspkind = require("lspkind")
 
 local buffer_option = {
@@ -36,6 +22,14 @@ local buffer_option = {
     end
     return vim.tbl_keys(bufs)
   end
+}
+
+local source_mapping = {
+  buffer = "[Buffer]",
+  nvim_lsp = "[LSP]",
+  nvim_lua = "[Lua]",
+  cmp_tabnine = "[TN]",
+  path = "[Path]",
 }
 
 local format = {
@@ -67,7 +61,18 @@ local source = {
   { name = 'buffer', priority = 7, keyword_length = 5, option = buffer_option, max_item_count = 8 },
   { name = 'nvim_lua', priority = 5 },
   { name = 'path', priority = 4 },
-  { name = 'luasnipo' },
+  { name = 'luasnip' },
+  { name = "latex_symbols" },
+}
+local source1 = {
+  {name="nvim_lsp"},
+  {nmae="nvim_lua"},
+  {name="npm"},
+  {name="cmp_tabnine"},
+  {name="luasnip"},
+  {name="buffer"},
+  {name="path"},
+  {name="luasnip"},
   { name = "latex_symbols" },
 }
 
@@ -75,14 +80,14 @@ local cmp = require("cmp")
 require("cmp").setup({
   window = {
     completion = cmp.config.window.bordered({
-      winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder"
+      winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
     }),
     documentation = cmp.config.window.bordered({
       winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder"
     }),
   },
 
-  formatting = format3,
+  formatting = format,
 
   mapping = cmp.mapping.preset.insert({
     --[[ ["<CR>"] = cmp.mapping.confirm({ select = true }), ]]
@@ -129,7 +134,7 @@ require("cmp").setup({
     end,
   },
   -- You should specify your *installed* sources.
-  sources = source2,
+  sources = source1,
   sorting = {
     comparators = {
       require('cmp_tabnine.compare'),

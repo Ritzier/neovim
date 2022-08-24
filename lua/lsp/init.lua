@@ -23,14 +23,16 @@ local servers = {
 	"omnisharp",
 }
 
-require("configuration.lsp.mason").mason(servers)
+require("lsp.mason").mason(servers)
 
-require("configuration.lsp.lspconfig").setup(servers)
+require("lsp.lspconfig").setup(servers)
 
-require("configuration.lsp.cmp_tabnine")
+require("lsp.cmp_tabnine")
 
-require("configuration.lsp.cmp")
+require("lsp.cmp")
 
-require("configuration.lsp.lsp_signature")
+require("lsp.lsp_signature")
 
-require("configuration.lsp.codes")
+require("lsp.codes")
+
+require("lsp.lspsaga")

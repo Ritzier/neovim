@@ -1,6 +1,6 @@
 local M = {}
 
-local codes = require("configuration.lsp.codes")
+local codes = require("lsp.codes")
 vim.diagnostic.config({
   float = {
     source = false,
@@ -45,8 +45,8 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-local capabilities = require("configuration.lsp.options.default").capabilities
-local attach = require("configuration.lsp.options.default").on_attach
+local capabilities = require("lsp.options.default").capabilities
+local attach = require("lsp.options.default").on_attach
 
 function M.setup(servers)
   for _, server in ipairs(servers) do
@@ -60,7 +60,7 @@ function M.setup(servers)
       require("lspconfig")[server].setup({
         on_attach = attach,
         capabilities = capabilities,
-        require("configuration.lsp.options.jsonls")
+        require("lsp.options.jsonls")
       })
 
     elseif server == "clangd" then
@@ -69,21 +69,21 @@ function M.setup(servers)
       require("lspconfig")[server].setup({
         capabilities = copy_capabilities,
         on_attach = attach,
-        require("configuration.lsp.options.clangd")
+        require("lsp.options.clangd")
       })
 
     elseif server == "vuels" then
       require("lspconfig")[server].setup({
         on_attach = attach,
         capabilities = capabilities,
-        require("configuration.lsp.options.vuels")
+        require("lsp.options.vuels")
       })
 
     elseif server == "cssls" then
-      capabilities = require("configuration.lsp.options.cssls").capabilities
+      capabilities = require("lsp.options.cssls").capabilities
       capabilities.textDocument.completion.completionItem.snippetSupport = true
       require("lspconfig")[server].setup({
-        on_attach = require("configuration.lsp.options.cssls").attach,
+        on_attach = require("lsp.options.cssls").attach,
         capabilities = capabilities,
       })
 
@@ -91,23 +91,24 @@ function M.setup(servers)
       require("lspconfig")[server].setup({
         on_attach = attach,
         capabilities = capabilities,
-        require("configuration.lsp.options.gopls")
+        require("lsp.options.gopls")
       })
 
     elseif server == "html" then
       require("lspconfig")[server].setup({
         on_attach = attach,
         capabilities = capabilities,
-        require("configuration.lsp.options.html")
+        require("lsp.options.html")
       })
 
     elseif server == "tsserver" then
       require("lspconfig")[server].setup({
-        capabilities = require("configuration.lsp.options.tsserver").capabilities,
+        capabilities = require("lsp.options.tsserver").capabilities,
         on_attach = attach
       })
 
     elseif server == "rust_analyzer" then
+      require("lsp.options.rust_analyzer")
 
     else
       require("lspconfig")[server].setup({

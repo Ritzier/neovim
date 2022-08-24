@@ -49,15 +49,34 @@ end
 --   base00 = ""
 -- }
 
-if vim.fn.has("nvim-0.8") then
-  -- vim.api.nvim_set_hl(0, "rainbowcol1", {fg="#4495C1"})
-  -- vim.api.nvim_set_hl(0, "rainbowcol2", {fg="#3cb0b4"})
-  -- vim.api.nvim_set_hl(0, "rainbowcol3", {fg="#71D0b8"})
-  vim.api.nvim_set_hl(0, "rainbowcol1", {fg="#415BC0"})
-  vim.api.nvim_set_hl(0, "rainbowcol2", {fg="#3A8DB1"})
-  vim.api.nvim_set_hl(0, "rainbowcol3", {fg="#78D4BF"})
-  vim.api.nvim_set_hl(0, "rainbowcol4", {fg="#2E8471"})
-  vim.api.nvim_set_hl(0, "rainbowcol5", {fg="#789BD2"})
-  vim.api.nvim_set_hl(0, "rainbowcol6", {fg="#2f4f83"})
-  vim.api.nvim_set_hl(0, "rainbowcol7", {fg="#52C6A8"})
-end
+-- vim.api.nvim_set_hl(0, "rainbowcol1", {fg="#4495C1"})
+-- vim.api.nvim_set_hl(0, "rainbowcol2", {fg="#3cb0b4"})
+-- vim.api.nvim_set_hl(0, "rainbowcol3", {fg="#71D0b8"})
+vim.api.nvim_set_hl(0, "rainbowcol1", {fg="#415BC0"})
+vim.api.nvim_set_hl(0, "rainbowcol2", {fg="#3A8DB1"})
+vim.api.nvim_set_hl(0, "rainbowcol3", {fg="#78D4BF"})
+vim.api.nvim_set_hl(0, "rainbowcol4", {fg="#2E8471"})
+vim.api.nvim_set_hl(0, "rainbowcol5", {fg="#789BD2"})
+vim.api.nvim_set_hl(0, "rainbowcol6", {fg="#2f4f83"})
+vim.api.nvim_set_hl(0, "rainbowcol7", {fg="#52C6A8"})
+
+
+
+vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { fg = "#808080" })
+vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#ee99a0" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindField", { fg = "#f38ba8" })
+
+vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#8aadf4" })
+vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#8aadf4" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#91d7ec" })
+vim.api.nvim_set_hl(0, "CmpItemKindInterface", { fg = "#91d7ec" })
+vim.api.nvim_set_hl(0, "CmpItemKindText", { fg = "#91d7ec" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = "#c6a0f6" })
+vim.api.nvim_set_hl(0, "CmpItemKindMethod", { fg = "#c6a0f6" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#f4dbd6" })
+vim.api.nvim_set_hl(0, "CmpItemKindProperty", { fg = "#f4dbd6" })
+vim.api.nvim_set_hl(0, "CmpItemKindUnit", { fg = "#f4dbd6" })
