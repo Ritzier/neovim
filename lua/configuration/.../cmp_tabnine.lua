@@ -13,4 +13,3 @@ tabnine.setup({
 	},
 	show_prediction_strength = false
 })
-

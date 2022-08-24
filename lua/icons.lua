@@ -201,5 +201,4 @@ icons.devicons = {
 	},
 }
 
-
 return icons

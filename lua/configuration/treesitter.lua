@@ -4,7 +4,7 @@ configs.setup({
   highlight = {
     enable = true,
   },
-  indent = { enable = true, disable = { "python", "css" } },
+  indent = { enable = true },
   rainbow = { enable = true },
   endwise = { enable = true },
   autotag = {

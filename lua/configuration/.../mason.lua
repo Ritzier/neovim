@@ -1,6 +1,5 @@
 local M = {}
 function M.mason(servers)
-  local lspconfig = require("lspconfig")
   require("mason").setup({
     ui = {
       icons = {

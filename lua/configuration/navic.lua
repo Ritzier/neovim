@@ -1,3 +1,3 @@
 require("nvim-navic").setup({
-	icons = require("configuration.icons").navic_icons
+	icons = require("icons").navic_icons
 })

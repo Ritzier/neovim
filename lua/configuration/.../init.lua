@@ -25,8 +25,12 @@ local servers = {
 
 require("configuration.lsp.mason").mason(servers)
 
-require("configuration.lsp.config").setup(servers)
+require("configuration.lsp.lspconfig").setup(servers)
+
+require("configuration.lsp.cmp_tabnine")
 
 require("configuration.lsp.cmp")
 
-require("configuration.lsp.null-ls")
+require("configuration.lsp.lsp_signature")
+
+require("configuration.lsp.codes")

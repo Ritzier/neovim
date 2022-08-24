@@ -1,4 +1,4 @@
-vim.cmd('set termguicolors')
+vim.g.termguicolors = true
 
 require'colorizer'.setup(
   {'*'},
