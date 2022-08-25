@@ -63,12 +63,8 @@ return packer.startup(function(use)
 	})
 
 	-- Colorscheme
-	use({
-		"EdenEast/nightfox.nvim",
-		config = function()
-			vim.cmd("colorscheme duskfox")
-		end,
-	})
+	use({ "EdenEast/nightfox.nvim" })
+  use({ "pineapplegiant/spaceduck" })
 
 	-- UI
 	-- NvimTree

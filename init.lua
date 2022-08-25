@@ -4,4 +4,5 @@ require("keymap")
 
 require("lsp")
 
-require("colorscheme")
+-- require("colorscheme").setup()
+vim.cmd("colorscheme spaceduck")
