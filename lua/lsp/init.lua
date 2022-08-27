@@ -27,8 +27,6 @@ require("lsp.mason").mason(servers)
 
 require("lsp.lspconfig").setup(servers)
 
-require("lsp.cmp_tabnine")
-
 require("lsp.cmp")
 
 require("lsp.lsp_signature")

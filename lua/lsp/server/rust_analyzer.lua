@@ -2,7 +2,7 @@ local M = {}
 
 local rt = require("rust-tools")
 
-M.capabilities = require("lsp.options.default").capabilities
+M.capabilities = require("lsp.server.default").capabilities
 
 function M.attach(client, bufnr)
   local navic = require("nvim-navic")

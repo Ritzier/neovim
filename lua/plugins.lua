@@ -38,10 +38,6 @@ packer.init({
 	},
 })
 
-local config = function(path)
-	require("configuration." .. path)
-end
-
 -- Install your plugins here
 return packer.startup(function(use)
 	use({ "wbthomason/packer.nvim" })
@@ -50,6 +46,8 @@ return packer.startup(function(use)
 	use({ "nvim-lua/plenary.nvim" })
 	use({ "kyazdani42/nvim-web-devicons" })
   use({ "nvim-lua/popup.nvim" })
+  use({ "RishabhRD/popfix" })
+  use({ "hood/popui.nvim" })
 
 	use({
 		"mrjones2014/legendary.nvim",
@@ -70,13 +68,13 @@ return packer.startup(function(use)
 	-- NvimTree
 	use({
 		"kyazdani42/nvim-tree.lua",
-		config = config("nvim_tree"),
+    config = function() require("configuration.nvim_tree") end,
 	})
 
 	-- Bufferline
 	use({
 		"akinsho/bufferline.nvim",
-		config = config("bufferline"),
+    config = function() require("configuration.bufferline") end,
 	})
 
   -- Status Line
@@ -86,21 +84,23 @@ return packer.startup(function(use)
       { "SmiteshP/nvim-navic" },
       { "SmiteshP/nvim-gps" },
     },
-    config = config("lualine")
+    config = function() require("configuration.lualine") end,
   })
 
 	-- CommandLine
 	use({
 		"gelguy/wilder.nvim",
-		config = config("wilder"),
+		config = function() require("configuration.wilder") end,
 	})
 
 	-- Dressing
 	use({
 		"stevearc/dressing.nvim",
 		event = "BufReadPre",
-		-- config = config("dressing"),
-		requires = { "MunifTanjim/nui.nvim" },
+		requires = {
+      "MunifTanjim/nui.nvim",
+    },
+    config = function() require("configuration.dressing") end,
 	})
 
 	-- TreeSitter
@@ -115,7 +115,7 @@ return packer.startup(function(use)
 			{ "jiangmiao/auto-pairs" },
 			{
 				"lukas-reineke/indent-blankline.nvim",
-				config = config("indentline"),
+        config = function() require("configuration.indentline") end,
 			},
 			{ "JoosepAlviste/nvim-ts-context-commentstring" },
 			{
@@ -125,7 +125,7 @@ return packer.startup(function(use)
 				end,
 			},
 		},
-		config = config("treesitter"),
+    config = function() require("configuration.treesitter") end,
 	})
 
 	-- Tools
@@ -141,7 +141,7 @@ return packer.startup(function(use)
 	use({
 		"lewis6991/gitsigns.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
-		config = config("gitsigns"),
+    config = function() require("configuration.gitsigns") end,
 	})
 	use({ "kdheepak/lazygit.nvim" })
 
@@ -170,47 +170,32 @@ return packer.startup(function(use)
 		cmd = "EasyAlign",
 	})
 
-	-- Show color
-	use({
-		"rktjmp/lush.nvim",
-		cmd = { "LushRunQuickstart", "LushRunTutorial", "Lushify", "LushImport" },
-	})
-	use({
-		"norcalli/nvim-colorizer.lua",
-		config = function()
-			require("configuration.colorizer")
-		end,
-	})
-
-  -- LSP
   use({
     "hrsh7th/nvim-cmp",
     requires = {
-      {"hrsh7th/nvim-compe"},
       {"neovim/nvim-lspconfig"},
       {"williamboman/mason.nvim"},
       {"williamboman/mason-lspconfig.nvim"},
       {"WhoIsSethDaniel/mason-tool-installer.nvim"},
+      {"hrsh7th/nvim-compe"},
       {"L3MON4D3/LuaSnip"},
-      {"hrsh7th/nvim-cmp"},
       {"hrsh7th/cmp-nvim-lua"},
       {"hrsh7th/cmp-nvim-lsp"},
       {"hrsh7th/cmp-buffer"},
       {"hrsh7th/cmp-path"},
       {"hrsh7th/cmp-calc"},
-      {"tzachar/cmp-tabnine", run="./install.sh"},
-      {"David-Kunz/cmp-npm"},
       {"saadparwaiz1/cmp_luasnip"},
       {"kdheepak/cmp-latex-symbols"},
+
       {"onsails/lspkind-nvim"},
       {"glepnir/lspsaga.nvim"},
       {"folke/lsp-trouble.nvim"},
       {"ray-x/lsp_signature.nvim"},
-      {"folke/lua-dev.nvim"},
       {"j-hui/fidget.nvim",config=function() require("fidget").setup() end},
-      {"b0o/schemastore.nvim"},
-      {"jose-elias-alvarez/typescript.nvim"},
-      {"rust-lang/rust.vim"},
+      {"lukas-reineke/cmp-under-comparator"},
+
+      {"folke/lua-dev.nvim"},
+      {"p00f/clangd_extensions.nvim"},
       {"simrat39/rust-tools.nvim"},
       {
         "saecki/crates.nvim",
@@ -224,12 +209,39 @@ return packer.startup(function(use)
           })
         end
       },
-      {"ray-x/go.nvim", config=function() require("go").setup() end},
-      {"mfussenegger/nvim-jdtls"},
-      {"akinsho/flutter-tools.nvim"},
-      {"udalov/kotlin-vim"},
-    }
+      { "jose-elias-alvarez/typescript.nvim" },
+      { "b0o/schemastore.nvim" },
+    },
+    config = function() require("lsp") end,
   })
+
+  -- DAP
+  use({
+    "mfussenegger/nvim-dap",
+    requires = {
+      "jbyuki/one-small-step-for-vimkind",
+      {"rcarriga/nvim-dap-ui", config=function() require("dapui") end},
+    },
+    cmd = { 'BreakpointToggle', 'Debug', 'DapREPL' },
+    config = function() require("dap-config") end,
+  })
+
+  -- Toggleterm
+  use({
+    "akinsho/toggleterm.nvim",
+    config = function() require("toggleterm") end,
+  })
+
+  -- FileType
+  use({ "ray-x/go.nvim", config = function() require("go").setup() end })
+  use({ "mfussenegger/nvim-jdtls" })
+  use({ "akinsho/flutter-tools.nvim", config = function() require("flutter-tools").setup() end })
+  use({ "udalov/kotlin-vim" })
+  use({ "rust-lang/rust.vim" })
+  use({ "Shatur/neovim-cmake", cmd="CMake" })
+
+  -- WhichKey
+  use({ "folke/which-key.nvim" })
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()

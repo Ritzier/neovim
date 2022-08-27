@@ -1,8 +1,5 @@
-vim.opt.termguicolors = true
 require("plugins")
-require("keymap")
 
-require("lsp")
+require("options")
 
--- require("colorscheme").setup()
-vim.cmd("colorscheme spaceduck")
+require("keymaps")
