@@ -241,7 +241,9 @@ return packer.startup(function(use)
   use({ "Shatur/neovim-cmake", cmd="CMake" })
 
   -- WhichKey
-  use({ "folke/which-key.nvim" })
+  use({
+    "folke/which-key.nvim",
+    })
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()

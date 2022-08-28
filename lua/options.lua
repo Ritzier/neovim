@@ -1,6 +1,5 @@
 require("impatient")
 local g = vim.g
-local cmd = vim.cmd
 local opt = vim.opt
 
 local disabled_built_ins = {
@@ -19,6 +18,8 @@ local disabled_built_ins = {
 for i = 1, 10 do
   g['loaded_' .. disabled_built_ins[i]] = 1
 end
+
+g.mapleader = " "
 
 opt.scrolloff = 7
 opt.wildignore = { '*.o', '*~', '*.pyc' }

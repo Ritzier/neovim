@@ -51,8 +51,14 @@ local attach = require("lsp.server.default").on_attach
 function M.setup(servers)
   for _, server in ipairs(servers) do
     if server == "sumneko_lua" then
-      local opt = require("lsp.server.sumneko_lua")
-      require("lspconfig")[server].setup(opt)
+      -- local opt = require("lsp.server.sumneko_lua")
+      -- require("lspconfig")[server].setup(opt)
+      -- require("lsp.server.sumneko_lua")
+      -- require("lspconfig")[server].setup({
+      --   on_attach = attach,
+      --   capabilities = capabilities,
+      -- })
+      require("lsp.server.sumneko_lua")
 
     elseif server == "jsonls" then
       require("lspconfig")[server].setup({

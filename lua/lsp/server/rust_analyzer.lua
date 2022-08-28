@@ -4,35 +4,11 @@ local rt = require("rust-tools")
 
 M.capabilities = require("lsp.server.default").capabilities
 
-function M.attach(client, bufnr)
-  local navic = require("nvim-navic")
-  local gps = require("nvim-gps")
-  if client.name ~= "tailwindcss"
-      and client.name ~= "bashls"
-      and client.name ~= "html"
-      and client.name ~= "angularls"
-      and client.name ~= "efm"
-      and client.name ~= "cssls"
-  then
-    navic.attach(client, bufnr)
-    require("lualine").setup({
-      sections = {
-        lualine_c = {
-          { navic.get_location, cond = navic.is_available },
-        },
-      },
-    })
-  else
-    require("lualine").setup({
-      sections = {
-        lualine_c = {
-          { gps.get_location, cond = gps.is_available },
-        },
-      },
-    })
-  end
+M.attach = require("lsp.server.default").on_attach
+
+function M.my_attach(client, bufnr)
+  M.attach(client, bufnr)
   vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-  -- Code action groups
   vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
 end
 
@@ -197,7 +173,7 @@ local opts = {
     standalone = true,
     server = {
       capabilities = M.capabilities,
-      on_attach = M.attach,
+      on_attach = M.my_attach,
 
       settings = {
         ["rust-analyzer"] = {
