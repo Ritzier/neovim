@@ -108,8 +108,8 @@ function M.setup(servers)
     elseif server == "rust_analyzer" then
       require("lsp.server.rust_analyzer")
 
-    elseif server == "jdtls" then
-      
+    -- elseif server == "jdtls" then
+      -- require("lsp.server.jdtls")
 
     else
       require("lspconfig")[server].setup({
