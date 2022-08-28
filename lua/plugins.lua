@@ -193,6 +193,7 @@ return packer.startup(function(use)
       { "ray-x/lsp_signature.nvim" },
       { "j-hui/fidget.nvim", config = function() require("fidget").setup() end },
       { "lukas-reineke/cmp-under-comparator" },
+      { "nvim-lua/lsp-status.nvim" },
 
       { "folke/lua-dev.nvim" },
       { "p00f/clangd_extensions.nvim" },

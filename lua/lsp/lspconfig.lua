@@ -108,6 +108,9 @@ function M.setup(servers)
     elseif server == "rust_analyzer" then
       require("lsp.server.rust_analyzer")
 
+    elseif server == "jdtls" then
+      
+
     else
       require("lspconfig")[server].setup({
         on_attach = attach,
