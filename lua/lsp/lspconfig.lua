@@ -118,6 +118,13 @@ function M.setup(servers)
         use_mono = true,
       })
 
+    elseif server == "efmls-configs" then
+      require("efmls-configs").init({
+        on_attach = attach,
+        capabilities = capabilities,
+        init_options = { documentFormatting = true, codeAction = true },
+      })
+
     else
       require("lspconfig")[server].setup({
         on_attach = attach,

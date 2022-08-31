@@ -40,6 +40,8 @@ require("lsp.codes")
 
 require("lsp.lspsaga")
 
+require("lsp.efmls")
+
 require("which-key").register({
     l = {
         name = "LSP",

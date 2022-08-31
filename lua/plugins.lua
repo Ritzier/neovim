@@ -187,6 +187,7 @@ return packer.startup(function(use)
       { "hrsh7th/cmp-calc" },
       { "saadparwaiz1/cmp_luasnip" },
       { "kdheepak/cmp-latex-symbols" },
+      {"creativenull/efmls-configs-nvim"},
 
       { "onsails/lspkind-nvim" },
       { "glepnir/lspsaga.nvim" },
