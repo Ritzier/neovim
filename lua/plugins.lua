@@ -173,6 +173,7 @@ return packer.startup(function(use)
   use({
     "hrsh7th/nvim-cmp",
     requires = {
+      { "williamboman/nvim-lsp-installer" },
       { "neovim/nvim-lspconfig" },
       { "williamboman/mason.nvim" },
       { "williamboman/mason-lspconfig.nvim" },

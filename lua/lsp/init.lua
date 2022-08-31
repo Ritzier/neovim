@@ -4,12 +4,12 @@ local servers = {
 	"bashls",
 	"clangd",
 	"cssls",
-	"clangd",
 	"cmake",
 	"dartls",
 	"dotls",
 	"gopls",
 	"dockerls",
+  "efm",
   "html",
   "jdtls",
 	"jsonls",
@@ -21,6 +21,11 @@ local servers = {
 	"tailwindcss",
 	"tsserver",
 	"omnisharp",
+  "opencl_ls",
+  "perlnavigator",
+  "r_language_server",
+  "solargraph",
+  "vuels",
 }
 
 require("lsp.mason").mason(servers)

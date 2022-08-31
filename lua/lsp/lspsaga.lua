@@ -1,15 +1,8 @@
 local saga = require("lspsaga")
 
 saga.init_lsp_saga({
-	-- put modified options in there
-
-	-- Options with default value
-	-- "single" | "double" | "rounded" | "bold" | "plus"
 	border_style = "single",
-	--the range of 0 for fully opaque window (disabled) to 100 for fully
-	--transparent background. Values between 0-30 are typically most useful.
 	saga_winblend = 0,
-	-- when cursor in saga window you config these to move
 	move_in_saga = { prev = "<C-p>", next = "<C-n>" },
 	-- Error, Warn, Info, Hint
 	-- use emoji like
@@ -95,8 +88,7 @@ saga.init_lsp_saga({
 })
 
 
-local action = require("lspsaga.action")
--- scroll down hover doc or scroll in definition preview
-vim.keymap.set("n", "<C-f>", function() action.smart_scroll_with_saga(1) end, { silent = true })
--- scroll up hover doc
-vim.keymap.set("n", "<C-b>", function() action.smart_scroll_with_saga(-1) end, { silent = true })
+-- local action = require("lspsaga.action")
+-- vim.keymap.set("n", "<C-f>", function() action.smart_scroll_with_saga(1) end, { silent = true })
+-- -- scroll up hover doc
+-- vim.keymap.set("n", "<C-b>", function() action.smart_scroll_with_saga(-1) end, { silent = true })

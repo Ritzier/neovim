@@ -111,6 +111,13 @@ function M.setup(servers)
     -- elseif server == "jdtls" then
       -- require("lsp.server.jdtls")
 
+    elseif server == "omnisharp" then
+      require("lspconfig")[server].setup({
+        on_attach = attach,
+        capabilities = capabilities,
+        use_mono = true,
+      })
+
     else
       require("lspconfig")[server].setup({
         on_attach = attach,
