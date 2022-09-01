@@ -13,15 +13,8 @@ configs.setup({
   rainbow = { enable = true },
   endwise = { enable = true },
   autotag = {
-    enable = true,
-    filetypes = {
-      "html",
-      "xml",
-      "javascript",
-      "typescriptreact",
-      "javascriptreact",
-      "vue",
-    },
+    -- enable = true,
+    filetypes = { "html", "htmldjangon" },
   },
   context_commentstring = {
     enable = true

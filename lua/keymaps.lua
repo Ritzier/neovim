@@ -1,6 +1,8 @@
 local keymap = vim.keymap.set
 local silent = { silent = true }
 
+keymap("n", "<CR>", "<CR><ESC>O", silent)
+
 keymap("n", "<C-h>", "<C-w>h", silent)
 keymap("n", "<C-j>", "<C-w>j", silent)
 keymap("n", "<C-k>", "<C-w>k", silent)

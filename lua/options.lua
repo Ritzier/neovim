@@ -55,6 +55,8 @@ opt.signcolumn = 'yes:1'
 opt.termguicolors = true
 opt.background = 'light'
 
+opt.pumheight = 20
+
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2
@@ -63,7 +65,9 @@ opt.smartindent = true
 
 vim.cmd([[
 syntax enable
-filetype plugin indent on
+filetype on
+filetype indent on
+filetype plugin on
 ]])
 
 vim.o.guifont="JetBrainsMono Nerd Font"
