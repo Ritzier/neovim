@@ -1,19 +1,14 @@
 local configs = require("nvim-treesitter.configs")
 configs.setup({
-  ensure_installed = {
-    "lua",
-    "python",
-    "c",
-    "cpp",
-  },
+  ensure_installed = "all",
   highlight = {
     enable = true,
   },
   indent = { enable = true },
-  rainbow = { enable = true },
+  rainbow = { enable = true, extended_mode = true },
   endwise = { enable = true },
   autotag = {
-    -- enable = true,
+    enable = true,
     filetypes = { "html", "htmldjangon" },
   },
   context_commentstring = {

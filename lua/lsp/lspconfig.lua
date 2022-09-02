@@ -51,14 +51,24 @@ local attach = require("lsp.server.default").on_attach
 function M.setup(servers)
   for _, server in ipairs(servers) do
     if server == "sumneko_lua" then
-      -- local opt = require("lsp.server.sumneko_lua")
-      -- require("lspconfig")[server].setup(opt)
-      -- require("lsp.server.sumneko_lua")
-      -- require("lspconfig")[server].setup({
-      --   on_attach = attach,
-      --   capabilities = capabilities,
-      -- })
-      require("lsp.server.sumneko_lua")
+      require("lspconfig")[server].setup({
+        on_attach = attach,
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            diagnostics = { globals = { "vim", "packer_plugins" } },
+            workspace = {
+              library = {
+                [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+              },
+              maxPreload = 100000,
+              preloadFileSize = 10000,
+            },
+            telemetry = { enable = false },
+          },
+        },
+      })
 
     elseif server == "jsonls" then
       require("lspconfig")[server].setup({
@@ -108,7 +118,7 @@ function M.setup(servers)
     elseif server == "rust_analyzer" then
       require("lsp.server.rust_analyzer")
 
-    -- elseif server == "jdtls" then
+      -- elseif server == "jdtls" then
       -- require("lsp.server.jdtls")
 
     elseif server == "omnisharp" then

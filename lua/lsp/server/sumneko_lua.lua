@@ -1,6 +1,3 @@
-local attach = require("lsp.server.default").on_attach
-local capabilities = require("lsp.server.default").capabilities
-
 local luadev = require("lua-dev").setup({
   library = {
     vimruntime = true,
@@ -27,9 +24,7 @@ local luadev = require("lua-dev").setup({
         },
       },
     },
-    on_attach = attach,
-    capabilities = capabilities,
   },
 })
 
-require("lspconfig")["sumneko_lua"].setup(luadev)
+return luadev

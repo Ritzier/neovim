@@ -82,4 +82,4 @@ vim.g.neovide_cursor_vfx_particle_lifetime = 1.2
 vim.g.neovide_cursor_vfx_particle_speed = 20.0
 vim.g.neovide_cursor_vfx_particle_density = 5.0
 
-vim.cmd('colorscheme spaceduck')
+vim.cmd('colorscheme duskfox')
