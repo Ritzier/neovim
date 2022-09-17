@@ -33,15 +33,17 @@ cmp.setup({
             border = border("CmpDocBorder"),
         },
     },
-    sources = {
+    sources = cmp.config.sources({
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
         { name = "luasnip" },
-        { name = "path" },
-        { name = "spell" },
-        { name = "buffer" },
-        { name = "latex_symbols" },
     },
+        {
+            { name = "path" },
+            { name = "spell" },
+            { name = "buffer" },
+            { name = "latex_symbols" },
+        }),
     sorting = {
         comparators = {
             -- require("cmp_tabnine.compare"),
