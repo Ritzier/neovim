@@ -321,6 +321,12 @@ function M.setup()
                 { "WhoIsSethDaniel/mason-tool-installer.nvim" },
                 { "ray-x/lsp_signature.nvim" },
                 {
+                    "j-hui/fidget.nvim",
+                    config = function()
+                        require("fidget").setup()
+                    end
+                },
+                {
                     "creativenull/efmls-configs-nvim",
                     config = function()
                         require("lsp-config.efm")
@@ -365,6 +371,9 @@ function M.setup()
                     disable = true,
                 },
                 { "udalov/kotlin-vim", ft = { "kotlin" }, disable = true },
+                { "yuezk/vim-js" },
+                { "HerringtonDarkholme/yats.vim" },
+                { "maxmellon/vim-jsx-pretty" },
             },
             config = function() require("lsp-config") end,
         })

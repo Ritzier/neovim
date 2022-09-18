@@ -4,6 +4,13 @@ local servers = {
     "pyright",
     "html",
     "cssls",
+    "flow",
+    "graphql",
+    "quick_lint_js",
+    "svelte",
+    "tailwindcss",
+    "tsserver",
+    "efmls-configs",
 }
 
 require("lsp-config.lsp").setup(servers)
