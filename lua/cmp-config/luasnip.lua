@@ -1,4 +1,8 @@
-vim.o.runtimepath = vim.o.runtimepath .. "," .. os.getenv("HOME") .. "/.config/nvim/my-snippets/,"
+if vim.loop.os_uname() == "Windows_NT" then
+    vim.o.runtimepath = vim.o.runtimepath .. "," .. os.getenv("HOME") .. "\\.config\\nvim\\my-snippets\\"
+else
+    vim.o.runtimepath = vim.o.runtimepath .. "," .. os.getenv("HOME") .. "/.config/nvim/my-snippets/,"
+end
 require("luasnip").config.set_config({
     history = true,
     updateevents = "TextChanged,TextChangedI",
