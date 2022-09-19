@@ -11,6 +11,7 @@ local servers = {
     "tailwindcss",
     "tsserver",
     "efmls-configs",
+    "bashls",
 }
 
 require("lsp-config.lsp").setup(servers)

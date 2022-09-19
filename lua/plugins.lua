@@ -51,6 +51,10 @@ function M.setup()
         use({ "nvim-lua/plenary.nvim" })
         use({ "kyazdani42/nvim-web-devicons" })
 
+        use({ "sheerun/vim-polyglot" })
+        use({ "tjdevries/colorbuddy.nvim" })
+        use({ "bkegley/gloombuddy" })
+
         -- Legendary
         use({
             "mrjones2014/legendary.nvim",
