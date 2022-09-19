@@ -359,17 +359,7 @@ function M.setup()
                 },
                 { "jose-elias-alvarez/typescript.nvim" },
                 { "b0o/schemastore.nvim" },
-                { "akinsho/flutter-tools.nvim" },
-
                 { "mfussenegger/nvim-jdtls", ft = { "java" } },
-                {
-                    "akinsho/flutter-tools.nvim",
-                    requires = { "nvim-lua/plenary.nvim" },
-                    config = function()
-                        require("config.flutter").setup()
-                    end,
-                    disable = true,
-                },
                 { "udalov/kotlin-vim", ft = { "kotlin" }, disable = true },
                 { "yuezk/vim-js" },
                 { "HerringtonDarkholme/yats.vim" },
@@ -478,11 +468,18 @@ function M.setup()
                 "nvim-telescope/telescope-dap.nvim",
                 { "leoluz/nvim-dap-go", module = "dap-go" },
                 { "jbyuki/one-small-step-for-vimkind", module = "osv" },
+                { "nvim-lua/plenary.nvim" },
             },
             config = function()
                 require("dap-config").setup()
             end,
             disable = false,
+        })
+
+        use({
+            "akinsho/flutter-tools.nvim",
+            -- after = { "nvim-lsp", "nvim-dap" },
+            config = function() require("configuration.flutter") end,
         })
 
         use({
