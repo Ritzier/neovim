@@ -17,7 +17,7 @@ M.configurations = {
 
 function M.setup()
     require("dap").adapters.dart = M.adapters
-    require("dap").configurations.dart = M.configurations
+    require("dap").configurations.dart = { M.configurations }
 end
 
 return M

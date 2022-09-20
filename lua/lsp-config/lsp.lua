@@ -111,6 +111,9 @@ function M.setup(servers)
         elseif server == "html" then
             set_server("html", M.on_attach, M.capabilities)
 
+        elseif server == "clangd" then
+            set_server("clangd", M.on_attach, M.capabilities)
+
         else
             require("lspconfig")[server].setup({
                 on_attach = M.on_attach,

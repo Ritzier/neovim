@@ -78,8 +78,8 @@ efmls.setup({
 		formatter = prettier_d,
 	},
 	html = {
-		linter = prettier_d,
-		formatter = write_good,
+		linter = write_good,
+		formatter = prettier_d,
 	},
 	java = {
 		formatter = uncrustify,

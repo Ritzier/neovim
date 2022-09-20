@@ -41,7 +41,7 @@ function M.setup()
 				header = "",
 				prefix = "",
 			},
-			-- virtual_lines = true,
+			virtual_lines = true,
 		},
 	}
 
@@ -53,6 +53,9 @@ function M.setup()
 
 	-- Signature help configuration
 	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, config.float)
+
+	-- vim.cmd("autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()")
+	vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
 end
 
 return M

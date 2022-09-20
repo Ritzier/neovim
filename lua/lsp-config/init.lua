@@ -12,6 +12,9 @@ local servers = {
     "tsserver",
     "efmls-configs",
     "bashls",
+    "rust_analyzer",
+    "clangd",
+    "omnisharp",
 }
 
 require("lsp-config.lsp").setup(servers)
