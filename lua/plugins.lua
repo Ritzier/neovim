@@ -72,6 +72,7 @@ function M.setup()
         -- Colorscheme
         use({ "EdenEast/nightfox.nvim" })
         use({ "pineapplegiant/spaceduck" })
+        use({ "ellisonleao/gruvbox.nvim" })
 
         -- UI
         use({
@@ -249,21 +250,17 @@ function M.setup()
                     },
                 })
             end,
-            disable = false,
         })
         use({
             "ray-x/guihua.lua",
             run = "cd lua/fzy && make",
-            disable = true,
         })
         use({
             "doums/suit.nvim",
             config = function()
                 require("suit").setup({})
             end,
-            disable = true,
         })
-
         -- DB
         use({
             "tpope/vim-dadbod",
@@ -493,6 +490,13 @@ function M.setup()
             end,
             module = { "aerial" },
             cmd = { "AerialToggle" },
+        })
+
+        use({
+            "stevearc/overseer.nvim",
+            config = function()
+                require("overseer").setup()
+            end
         })
 
         if packer_bootstrap then

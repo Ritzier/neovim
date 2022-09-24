@@ -31,7 +31,7 @@ function M.on_attach(client, bufnr)
         fix_pos = true,
         hint_enable = true,
         hi_parameter = "Search",
-        handler_opts = { "double" },
+        -- handler_opts = { "double" },
     })
 
     if client.name ~= "tailwindcss"
@@ -118,9 +118,6 @@ function M.setup(servers)
             require("lspconfig")[server].setup({
                 on_attach = M.on_attach,
                 capabilities = M.capabilities,
-                flags = {
-                    debounce_text_changes = 150,
-                },
             })
         end
     end

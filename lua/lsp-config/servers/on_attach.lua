@@ -4,23 +4,28 @@ local navic = require("nvim-navic")
 local gps = require("nvim-gps")
 
 function M.on_attach(client, bufnr)
+	local bufopts = { noremap = true, silent = true, buffer = bufnr }
+	local opts = { noremap = true, silent = true }
+
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 	vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
 
-	keymap("n", "K", vim.lsp.buf.hover, { buffer = bufnr })
-	keymap("n", "<space>e", vim.diagnostic.open_float, opts)
-	keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-	keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-	keymap("n", "[e", "<cmd>lua vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.ERROR})<CR>", opts)
-	keymap("n", "]e", "<cmd>lua vim.diagnostic.goto_next({severity = vim.diagnostic.severity.ERROR})<CR>", opts)
+	keymap("n", "K", vim.lsp.buf.hover, bufopts)
+	keymap("n", "<space>e", vim.diagnostic.open_float, bufopts)
+	keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", bufopts)
+	keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", bufopts)
+	keymap("n", "[e", "<cmd>lua vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.ERROR})<CR>", bufopts)
+	keymap("n", "]e", "<cmd>lua vim.diagnostic.goto_next({severity = vim.diagnostic.severity.ERROR})<CR>", bufopts)
 
-
+	keymap("n", "<space>ln", "<cmd>Lspsaga rename<CR>", bufopts)
 
 	require("lsp-config.highlighter").setup(client, bufnr)
 
 	if client.server_capabilities.definitionProvider then
 		vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
 	end
+
+
 
 	-- sqls
 	if client.name == "sqls" then
@@ -34,7 +39,7 @@ function M.on_attach(client, bufnr)
 		fix_pos = true,
 		hint_enable = true,
 		hi_parameter = "Search",
-		handler_opts = { "double" },
+		-- handler_opts = { "double" },
 	})
 
 	if client.name ~= "tailwindcss"
@@ -62,5 +67,20 @@ function M.on_attach(client, bufnr)
 		})
 	end
 end
+
+vim.api.nvim_create_autocmd("CursorHold", {
+	buffer = bufnr,
+	callback = function()
+		local opt = {
+			focusable = false,
+			close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+			border = 'rounded',
+			source = 'always',
+			prefix = ' ',
+			scope = 'cursor',
+		}
+		vim.diagnostic.open_float(nil, opt)
+	end
+})
 
 return M

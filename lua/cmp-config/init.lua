@@ -59,6 +59,14 @@ cmp.setup({
     },
     formatting = {
         format = function(entry, vim_item)
+            local ELLIPSIS_CHAR = '…'
+            local MAX_LABEL_WIDTH = 30
+            local MAX_KIND_WIDTH = 20
+
+            local get_ws = function(max, len)
+                return (" "):rep(max - len)
+            end
+
             local lspkind_icons = {
                 Text = "",
                 Method = "",
@@ -100,6 +108,13 @@ cmp.setup({
                 treesitter = "  ",
                 zsh = "   ZSH",
             })[entry.source.name]
+
+            local content = vim_item.abbr
+            if #content > MAX_LABEL_WIDTH then
+                vim_item.abbr = vim.fn.strcharpart(content, 0, MAX_LABEL_WIDTH) .. ELLIPSIS_CHAR
+            else
+                vim_item.abbr = content .. get_ws(MAX_LABEL_WIDTH, #content)
+            end
 
             return vim_item
         end,

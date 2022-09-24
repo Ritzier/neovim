@@ -11,51 +11,35 @@ function M.setup()
 		vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
 	end
 
-	-- LSP handlers configuration
-	local config = {
-		float = {
-			focusable = true,
-			style = "minimal",
-			border = "rounded",
-		},
-
-		diagnostic = {
-			-- virtual_text = false,
-			virtual_text = { spacing = 4, prefix = "●" },
-			-- virtual_text = {
-			-- 	severity = {
-			-- 		min = vim.diagnostic.severity.ERROR,
-			-- 	},
-			-- },
-			signs = {
-				active = signs,
-			},
-			underline = true,
-			update_in_insert = false,
-			severity_sort = true,
-			float = {
-				focusable = true,
-				style = "minimal",
-				border = "rounded",
-				source = "always",
-				header = "",
-				prefix = "",
-			},
-			virtual_lines = true,
-		},
+	local border = {
+		{ "╭", "FloatBorder" },
+		{ "─", "FloatBorder" },
+		{ "╮", "FloatBorder" },
+		{ "│", "FloatBorder" },
+		{ "╯", "FloatBorder" },
+		{ "─", "FloatBorder" },
+		{ "╰", "FloatBorder" },
+		{ "│", "FloatBorder" },
 	}
 
 	-- Diagnostic configuration
-	vim.diagnostic.config(config.diagnostic)
+	vim.diagnostic.config({
+		virtual_text = {
+			prefix = "●",
+		},
+		signs = true,
+		underline = ture,
+		update_in_insert = true,
+		severity_sort = true,
+		virtual_lines = true,
+	})
 
-	-- Hover configuration
-	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, config.float)
+	vim.diagnostic.open_float({
+		width = 50
+	})
 
-	-- Signature help configuration
-	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, config.float)
-
-	-- vim.cmd("autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()")
-	vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
+	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
 end
 
 return M
