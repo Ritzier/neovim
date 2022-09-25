@@ -502,6 +502,22 @@ function M.setup()
             end
         })
 
+        -- CMake
+        -- use({
+        --     "Shatur/neovim-cmake",
+        --     requires = { "plenary.nvim" },
+        --     config = function()
+        --         require("configuration.cmake")
+        --     end
+        -- })
+        use({
+            "Civitasv/cmake-tools.nvim",
+            after = { "nvim-dap" },
+            config = function()
+                require("configuration.cmake-tools")
+            end
+        })
+
         if packer_bootstrap then
             print("Neovim restart is required after installation!")
             require("packer").sync()
