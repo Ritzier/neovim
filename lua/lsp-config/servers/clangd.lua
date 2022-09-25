@@ -14,6 +14,9 @@ function M.setup(on_attach, capabilities)
     server = {
       capabilities = copy_capabilities,
       single_file_support = true,
+      init_options = {
+        clangdFileStatus = true,
+      },
       on_attach = custom_attach,
       cmd = {
         "clangd",
@@ -26,7 +29,8 @@ function M.setup(on_attach, capabilities)
         "--cross-file-rename",
         "--completion-style=detailed",
         "--header-insertion-decorators",
-        "--header-insertion=iwyu",
+        "--header-insertion=never",
+        "--suggest-missing-includes"
       },
       commands = {
         ClangdSwitchSourceHeader = {
@@ -64,8 +68,7 @@ function M.setup(on_attach, capabilities)
         highlight = "Comment",
         priority = 100,
       },
-
-    }
+    },
   })
 end
 
