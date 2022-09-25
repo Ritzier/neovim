@@ -517,6 +517,10 @@ function M.setup()
                 require("configuration.cmake-tools")
             end
         })
+        use({
+            "Arjun31415/BuildTask.nvim",
+            requires = "rcarriga/nvim-notify"
+        })
 
         if packer_bootstrap then
             print("Neovim restart is required after installation!")

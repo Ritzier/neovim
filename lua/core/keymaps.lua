@@ -1,5 +1,6 @@
 local keymap = vim.keymap.set
 local silent = { silent = true }
+local wk = require("which-key")
 
 keymap("n", "<CR>", "<CR><ESC>O", silent)
 
@@ -39,3 +40,10 @@ keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float", silent)
 
 -- Overseer
 keymap("n", "<leader>o", ":OverseerRun<CR>", silent)
+
+wk.register({
+	t = {
+		name = "Tools", -- optional group name
+		l = { "<cmd>Telescope live_grep<CR>", "Find line" }
+	},
+}, { prefix = "<space>" })

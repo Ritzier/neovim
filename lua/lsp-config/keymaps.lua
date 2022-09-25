@@ -14,7 +14,7 @@ local function keymappings(client, bufnr)
 	-- buf_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 	-- vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
 	keymap("n", "K", vim.lsp.buf.hover, { buffer = bufnr })
-    keymap("n", "<space>e", vim.diagnostic.open_float, opts)
+	keymap("n", "<space>e", vim.diagnostic.open_float, opts)
 
 	keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 	keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
@@ -30,7 +30,8 @@ local function keymappings(client, bufnr)
 			d = { "<cmd>lua require('telescope.builtin').diagnostics()<CR>", "Diagnostics" },
 			f = { "<cmd>Lspsaga lsp_finder<CR>", "Finder" },
 			i = { "<cmd>LspInfo<CR>", "Lsp Info" },
-			n = { "<cmd>lua require('renamer').rename()<CR>", "Rename" },
+			-- n = { "<cmd>lua require('renamer').rename()<CR>", "Rename" },
+			n = { "<cmd>Lspsaga rename<CR>", "Rename" },
 			r = { "<cmd>lua require('telescope.builtin').lsp_references()<CR>", "References" },
 			s = { "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", "Document Symbols" },
 			t = { "<cmd>TroubleToggle document_diagnostics<CR>", "Trouble" },
