@@ -46,4 +46,8 @@ wk.register({
 		name = "Tools", -- optional group name
 		l = { "<cmd>Telescope live_grep<CR>", "Find line" }
 	},
+	c = {
+		name = "CMake",
+		-- b = { ":!cmake -B ", "Hi" }
+	}
 }, { prefix = "<space>" })

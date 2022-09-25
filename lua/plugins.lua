@@ -503,13 +503,13 @@ function M.setup()
         })
 
         -- CMake
-        -- use({
-        --     "Shatur/neovim-cmake",
-        --     requires = { "plenary.nvim" },
-        --     config = function()
-        --         require("configuration.cmake")
-        --     end
-        -- })
+        use({
+            "Shatur/neovim-cmake",
+            requires = { "plenary.nvim" },
+            config = function()
+                require("configuration.cmake")
+            end
+        })
         use({
             "Civitasv/cmake-tools.nvim",
             after = { "nvim-dap" },
