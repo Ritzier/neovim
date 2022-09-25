@@ -1,18 +1,15 @@
 local M = {}
 
-local HOME = os.getenv "HOME"
-local DEBUGGER_LOCATION = HOME .. "/.local/share/nvim/vscode-chrome-debug"
-
-function M.setup()
+function M.setup(chromeDebugger)
   local dap = require "dap"
 
   dap.adapters.chrome = {
     type = "executable",
     command = "node",
-    args = { DEBUGGER_LOCATION .. "/out/src/chromeDebug.js" },
+    args = chromeDebugger,
   }
 
-  dap.configurations.javascript = { 
+  dap.configurations.javascript = {
     {
       type = "chrome",
       request = "attach",

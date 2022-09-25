@@ -1,16 +1,12 @@
 local M = {}
 
--- Debugger installation location
-local HOME = os.getenv "HOME"
-local DEBUGGER_LOCATION = HOME .. "/.local/share/nvim/netcoredbg"
-
-function M.setup()
+function M.setup(PATH_DEBUG)
   local dap = require "dap"
 
   -- Adapter configuration
   dap.adapters.coreclr = {
     type = "executable",
-    command = DEBUGGER_LOCATION .. "/netcoredbg",
+    command = PATH_DEBUG,
     args = { "--interpreter=vscode" },
   }
 

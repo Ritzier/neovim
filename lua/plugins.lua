@@ -1,4 +1,4 @@
-local M = {}
+M = {}
 
 function M.setup()
     -- Indicate first time installation
@@ -255,12 +255,12 @@ function M.setup()
             "ray-x/guihua.lua",
             run = "cd lua/fzy && make",
         })
-        use({
-            "doums/suit.nvim",
-            config = function()
-                require("suit").setup({})
-            end,
-        })
+        -- use({
+        --     "doums/suit.nvim",
+        --     config = function()
+        --         require("suit").setup({})
+        --     end,
+        -- })
         -- DB
         use({
             "tpope/vim-dadbod",
@@ -365,6 +365,9 @@ function M.setup()
                 { "yuezk/vim-js" },
                 { "HerringtonDarkholme/yats.vim" },
                 { "maxmellon/vim-jsx-pretty" },
+                { "dart-lang/dart-vim-plugin" },
+                { "natebosch/vim-lsc" },
+                { "natebosch/vim-lsc-dart" },
             },
             config = function() require("lsp-config") end,
         })

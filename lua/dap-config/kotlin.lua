@@ -1,8 +1,13 @@
 local M = {}
 
--- Debugger installation location
-local HOME = os.getenv "HOME"
-local DEBUGGER_LOCATION = HOME .. "/.local/share/nvim/kotlin-debug-adapter"
+-- https://github.com/gradle/gradle/releases
+-- https://github.com/fwcd/kotlin-debug-adapter
+
+if vim.loop.os_uname().sysname == "Windows_NT" then
+  M.DEBUG_PATH = vim.fn.stdpath("config") .. "kotlin-debug-adapter\\bin\\kotlin-debug-adapter.bat"
+else
+  M.DEBUG_PATH = vim.fn.stdpath("config") .. "kotlin-debug-adapter/bin/kotlin-debug-adapter"
+end
 
 function M.setup()
   local dap = require "dap"
@@ -10,7 +15,7 @@ function M.setup()
   -- Adapter configuration
   dap.adapters.kotlin = {
     type = "executable",
-    command = DEBUGGER_LOCATION .. "/adapter/build/install/adapter/bin/kotlin-debug-adapter",
+    command = M.DEBUG_PATH,
     args = { "--interpreter=vscode" },
   }
 

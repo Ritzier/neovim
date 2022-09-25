@@ -1,11 +1,10 @@
 local M = {}
 
-local function configure()
-  -- local dap_install = require "dap-install"
-  -- dap_install.setup {
-  --   installation_path = vim.fn.stdpath "data" .. "/dapinstall/",
-  -- }
+local NETCOREDBG = require("dap-config.path").NETCOREDBG
+local CODELLDB = require("dap-config.path").CODELLDB
+local chromeDebugger = require("dap-config.path").CHROME_DEBUGGER
 
+local function configure()
   local dap_breakpoint = {
     error = {
       text = "🟥",
@@ -51,19 +50,30 @@ local function configure_exts()
 end
 
 local function configure_debuggers()
+  require("dap-config.codelldb").setup(CODELLDB)
+  require("dap-config.csharp").setup(NETCOREDBG)
+  require("dap-config.kotlin").setup()
   require("dap-config.lua").setup()
   require("dap-config.python").setup()
   require("dap-config.rust").setup()
   require("dap-config.go").setup()
-  require("dap-config.csharp").setup()
-  require("dap-config.kotlin").setup()
-  require("dap-config.typescript").setup()
+  require("dap-config.c").setup()
+  require("dap-config.cpp").setup()
+  require("dap-config.rust").setup()
+  require("dap-config.typescript").setup(chromeDebugger)
+end
+
+local function only_windows()
+  if vim.loop.os_uname().sysname == "Windows_NT" then
+    require("dap-config.dart").setup()
+  end
 end
 
 function M.setup()
   configure() -- Configuration
   configure_exts() -- Extensions
   configure_debuggers() -- Debugger
+  only_windows()
   require("dap-config.keymaps").setup() -- Keymaps
 end
 

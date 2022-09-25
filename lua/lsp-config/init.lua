@@ -15,6 +15,7 @@ local servers = {
     "rust_analyzer",
     "clangd",
     "omnisharp",
+    "dartls",
 }
 
 require("lsp-config.lsp").setup(servers)
