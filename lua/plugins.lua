@@ -519,7 +519,10 @@ function M.setup()
         })
         use({
             "Arjun31415/BuildTask.nvim",
-            requires = "rcarriga/nvim-notify"
+            requires = "rcarriga/nvim-notify",
+            config = function()
+                require('buildtask').setup({ default_shell = "$SHELL", default_task_file = "task.json" })
+            end
         })
 
         if packer_bootstrap then
