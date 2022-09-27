@@ -48,6 +48,7 @@ function M.on_attach(client, bufnr)
 		and client.name ~= "angularls"
 		and client.name ~= "efm"
 		and client.name ~= "cssls"
+		and client.nmae ~= "cmake"
 	then
 		navic.attach(client, bufnr)
 		require("lualine").setup({

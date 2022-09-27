@@ -403,26 +403,8 @@ function M.setup()
         use({
             "rktjmp/lush.nvim",
             cmd = { "LushRunQuickstart", "LushRunTutorial", "Lushify", "LushImport" },
-            disable = false,
         })
-        use({
-            "max397574/colortils.nvim",
-            cmd = "Colortils",
-            config = function()
-                require("configuration.colortils")
-            end,
-        })
-        use({
-            "ziontee113/color-picker.nvim",
-            cmd = { "PickColor", "PickColorInsert" },
-            config = function()
-                require("color-picker")
-            end,
-        })
-        use({
-            "lifepillar/vim-colortemplate",
-            disable = true,
-        })
+        use({ "uga-rosa/ccc.nvim", })
 
         use({
             "nvim-telescope/telescope.nvim",
@@ -521,8 +503,21 @@ function M.setup()
             "Arjun31415/BuildTask.nvim",
             requires = "rcarriga/nvim-notify",
             config = function()
-                require('buildtask').setup({ default_shell = "$SHELL", default_task_file = "task.json" })
+                if vim.loop.os_uname().sysname == "Windows_NT" then
+                    path = vim.fn.stdpath("config") .. "\\task.json"
+                else
+                    path = vim.fn.stdpath("config") .. "/task.json"
+                end
+                require('buildtask').setup({
+                    default_shell = "$SHELL",
+                    default_task_file = path,
+                })
             end
+        })
+
+        -- Godot
+        use({
+            "habamax/vim-godot"
         })
 
         if packer_bootstrap then
