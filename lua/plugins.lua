@@ -328,6 +328,12 @@ function M.setup()
                     end
                 },
                 {
+                    "lukas-reineke/lsp-format.nvim",
+                    config = function()
+                        require("lsp-format").setup()
+                    end
+                },
+                {
                     "creativenull/efmls-configs-nvim",
                     config = function()
                         require("lsp-config.efm")

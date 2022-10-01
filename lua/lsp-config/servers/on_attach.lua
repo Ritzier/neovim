@@ -19,14 +19,13 @@ function M.on_attach(client, bufnr)
 	keymap("n", "]e", "<cmd>lua vim.diagnostic.goto_next({severity = vim.diagnostic.severity.ERROR})<CR>", bufopts)
 
 	keymap("n", "<space>ln", "<cmd>Lspsaga rename<CR>", bufopts)
+	keymap("n", "<space>lf", "<cmd>L")
 
 	require("lsp-config.highlighter").setup(client, bufnr)
 
 	if client.server_capabilities.definitionProvider then
 		vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
 	end
-
-
 
 	-- sqls
 	if client.name == "sqls" then
@@ -69,22 +68,7 @@ function M.on_attach(client, bufnr)
 		})
 	end
 
+	require("lsp-format").on_attach(client)
 end
-
-vim.api.nvim_create_autocmd("CursorHold", {
-	buffer = bufnr,
-	callback = function()
-		local opt = {
-			focusable = false,
-			close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-			border = 'rounded',
-			source = 'always',
-			prefix = ' ',
-			scope = 'cursor',
-		}
-		vim.diagnostic.open_float(nil, opt)
-	end
-})
-
 
 return M

@@ -27,6 +27,15 @@ function M.setup(servers)
                 init_options = { documentFormatting = true, codeAction = true },
             })
 
+        elseif server == "efm" then
+            require("lspconfig").efm.setup({
+                on_attach = on_attach,
+                init_options = { documentFormatting = true },
+                settings = {
+                    languages = require("lsp-config.efm")
+                }
+            })
+
         elseif server == "omnisharp" then
             require("lspconfig")[server].setup({
                 on_attach = on_attach,
