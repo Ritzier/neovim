@@ -24,3 +24,5 @@ require("lsp-config.lsp").setup(servers)
 require("lsp-config.handlers").setup()
 
 require("lsp-config.mason").setup()
+
+require("lsp-config.format").toggle_format_on_save()

@@ -25,7 +25,7 @@ local xo = require("efmls-configs.linters.xo")
 local xo_fmt = require("efmls-configs.formatters.xo")
 -- JSON, JSON5, JSONC
 -- local eslint = require 'efmls-configs.linters.eslint'
--- local prettier = require 'efmls-configs.formatters.prettier'
+local prettier = require 'efmls-configs.formatters.prettier'
 -- LUA
 local stylua = require("efmls-configs.formatters.stylua")
 -- local luacheck = require("efmls-configs.linters.luacheck")
@@ -79,7 +79,8 @@ efmls.setup({
 	},
 	html = {
 		linter = write_good,
-		formatter = prettier_d,
+		-- formatter = prettier_d,
+		formatter = prettier
 	},
 	java = {
 		formatter = uncrustify,

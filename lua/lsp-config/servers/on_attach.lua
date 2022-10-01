@@ -2,6 +2,7 @@ local M = {}
 
 local navic = require("nvim-navic")
 local gps = require("nvim-gps")
+local keymap = vim.keymap.set
 
 function M.on_attach(client, bufnr)
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -67,6 +68,7 @@ function M.on_attach(client, bufnr)
 			},
 		})
 	end
+
 end
 
 vim.api.nvim_create_autocmd("CursorHold", {
@@ -83,5 +85,6 @@ vim.api.nvim_create_autocmd("CursorHold", {
 		vim.diagnostic.open_float(nil, opt)
 	end
 })
+
 
 return M
