@@ -1,4 +1,5 @@
-require("plugins")
-require("core")
-
-vim.cmd("colorscheme duskfox")
+require("config.options")
+require("config.lazy")
+--require("config.autocmds")
+require("keymaps")
+--require("utils.contextmenu")
