@@ -4,35 +4,26 @@ return {
     event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lua",
+      "hrsh7th/cmp-path",
+      "kdheepak/cmp-latex-symbols",
+      "onsails/lspkind.nvim",
+      "lukas-reineke/cmp-under-comparator",
+      {
+        "L3MON4D3/LuaSnip",
+        dependencies = { "rafamadriz/friendly-snippets" },
+        config = function()
+          require("luasnip").config.set_config({
+            history = false,
+            update_events = "TextChanged, TextChangedI",
+            delete_check_events = "TextChanged, InsertLeave",
+          })
+          require("luasnip.loaders.from_lua").lazy_load()
+          -- require("luasnip.loaders.from_vscode").lazy_load()
+          -- require("luasnip.loaders.from_snipmate").lazy_load()
+        end
+      },
     },
+    config = require("plugins.cmp.config")
   }
-}return function(opts)
-	require("neodev").setup({
-		library = {
-			enabled = true,
-			runtime = true,
-			types = true,
-			plugins = true,
-		},
-		setup_jsonls = true,
-		lspconfig = true,
-		pathStrict = true,
-	})
-
-	require("lspconfig")["lua_ls"].setup({
-		capabilities = opts.capabilities,
-		on_attach = opts.on_attach,
-		settings = {
-			Lua = {
-				diagnostics = {
-					globals = { "vim" },
-					disable = { "different-requires" },
-				},
-				format = { enable = false },
-				telemetry = { enable = false },
-				-- Do not override treesitter lua highlighting with lua_ls's highlighting
-				semantic = { enable = false },
-			},
-		},
-	})
-end
+}

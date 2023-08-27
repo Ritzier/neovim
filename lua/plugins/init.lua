@@ -20,7 +20,6 @@ return {
 
 	{ "nacro90/numb.nvim", event = "BufReadPre", config = true },
 
-	
 	{
 		"stevearc/dressing.nvim",
 		event = "VeryLazy",
@@ -89,9 +88,9 @@ return {
 		opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help" } },
     -- stylua: ignore
     keys = {
-      { "<leader>qs", function() require("persistence").load() end, desc = "Restore Session" },
+      { "<leader>qs", function() require("persistence").load() end,                desc = "Restore Session" },
       { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-      { "<leader>qd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
+      { "<leader>qd", function() require("persistence").stop() end,                desc = "Don't Save Current Session" },
     },
 	},
 
@@ -106,8 +105,9 @@ return {
 		end,
 	},
 
-  {
-  "lambdalisue/suda.vim",
-    event = "CmdlineEnter",
-  }
+	{
+		"lambdalisue/suda.vim",
+		event = "CmdlineEnter",
+	},
+
 }

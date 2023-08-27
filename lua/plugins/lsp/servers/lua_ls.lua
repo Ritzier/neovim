@@ -1,4 +1,6 @@
-return function(on_attach, capabilities)
+local M = {}
+
+return function M.setup(on_attach, capabilities)
 	require("neodev").setup({
 		library = {
 			enabled = true,

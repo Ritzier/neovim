@@ -2,7 +2,7 @@ return {
 	"arduino_language_server",
 	"bashls",
 	"clangd",
-	"monisharp",
+	"omnisharp",
 	"cmake",
 	"cssls",
 	"denols",

@@ -1,6 +1,7 @@
 local null_ls = require("null-ls")
 return function()
   require("mason").setup({})
+
   require("mason-lspconfig").setup({
     ensure_installed = require("plugins.lsp.servers_list")
   })

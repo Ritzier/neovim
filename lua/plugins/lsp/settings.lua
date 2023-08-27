@@ -31,6 +31,8 @@ return function()
 
 	vim.diagnostic.config(config.diagnostic)
 
+  require("lspconfig.ui.windows").default_options.border = "rounded"
+
 	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
 		border = "rounded",
 		close_events = { "BufHidden", "InsertLeave" },
